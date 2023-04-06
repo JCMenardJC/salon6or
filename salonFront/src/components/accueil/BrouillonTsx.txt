@@ -1,0 +1,112 @@
+import "./accueil.css";
+
+/* Le HTML sera composé de trois parties principales : les boutons radio et les étiquettes, le conteneur avec les panneaux et leurs "tranches" pour chaque image, et les titres.
+Le conteneur avec la classe cr-bgimg aura une division pour chacun des panneaux et à l'intérieur nous placerons des plages pour chaque image avec la bonne position d'arrière-plan. 
+Ainsi, le premier panneau aura quatre tranches, chacune ayant l'une des images en arrière-plan avec la position la plus à gauche. 
+Le deuxième panneau aura à nouveau quatre tranches mais maintenant la position de l'arrière-plan sera déplacée pour afficher la partie suivante de l'image respective.
+ */
+function Accueil() {
+  return (
+    <div>
+      <section className="cr-container">
+        {/* <!-- radio buttons and labels --> */}
+        <input
+          id="select-img-1"
+          name="radio-set-1"
+          type="radio"
+          className="cr-selector-img-1"
+          checked
+        />
+        <label htmlFor="select-img-1" className="cr-label-img-1">
+          1
+        </label>
+
+        <input
+          id="select-img-2"
+          name="radio-set-1"
+          type="radio"
+          className="cr-selector-img-2"
+        />
+        <label htmlFor="select-img-2" className="cr-label-img-2">
+          2
+        </label>
+
+        <input
+          id="select-img-3"
+          name="radio-set-1"
+          type="radio"
+          className="cr-selector-img-3"
+        />
+        <label htmlFor="select-img-3" className="cr-label-img-3">
+          3
+        </label>
+
+        {/* <input
+          id="select-img-4"
+          name="radio-set-1"
+          type="radio"
+          className="cr-selector-img-4"
+        />
+        <label htmlFor="select-img-4" className="cr-label-img-4">
+          4
+        </label> */}
+
+        <div className="clr"></div>
+
+        {/* <!-- panels --> */}
+        <div className="cr-bgimg">
+          <div>
+            <span>Slice 1 - Image 1</span>
+            <span>Slice 1 - Image 2</span>
+            <span>Slice 1 - Image 3</span>
+            {/*             <span>Slice 1 - Image 4</span>
+             */}{" "}
+          </div>
+          <div>
+            <span>Slice 2 - Image 1</span>
+            <span>Slice 2 - Image 2</span>
+            <span>Slice 2 - Image 3</span>
+            {/*             <span>Slice 2 - Image 4</span>
+             */}{" "}
+          </div>
+          <div>
+            <span>Slice 3 - Image 1</span>
+            <span>Slice 3 - Image 2</span>
+            <span>Slice 3 - Image 3</span>
+            {/*             <span>Slice 3 - Image 4</span>
+             */}{" "}
+          </div>
+          <div>
+            <span>Slice 4 - Image 1</span>
+            <span>Slice 4 - Image 2</span>
+            <span>Slice 4 - Image 3</span>
+            <span>Slice 4 - Image 4</span>
+          </div>
+        </div>
+
+        {/* <!-- titles --> */}
+        <div className="cr-titles">
+          <h3>
+            <span>Cosy</span>
+            <span>Un lieu semi-privatif et original</span>
+          </h3>
+          <h3>
+            <span>Experte</span>
+            <span>
+              Vos cheveux seront confié à l'experience et l'excellence
+            </span>
+          </h3>
+          <h3>
+            <span>Nature</span>
+            <span>Des produits Bio et végétales</span>
+          </h3>
+          {/* <h3>
+            <span>Belle</span>
+            <span>Pensez à vous, prenez soin de vous</span>
+          </h3> */}
+        </div>
+      </section>
+    </div>
+  );
+}
+export default Accueil;
