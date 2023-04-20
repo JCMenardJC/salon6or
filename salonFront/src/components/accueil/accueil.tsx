@@ -6,7 +6,7 @@ function Accueil() {
       <div className="card text-bg-dark rounded-0">
         <img
           src="image52.jpg"
-          className="card-img rounded-0 border border-5 border-dark"
+          className="img-fluid img-principale rounded-0 "
           alt="image_accueil"
         />
         <div className="card-img-overlay">

@@ -11,7 +11,7 @@ function CoiffureFemme() {
                 <div className="info">
                   <header></header>
                   <h3 className="border">La couleur</h3>
-                  <p>
+                  <p className="description">
                     La coloration des cheveux ou plus simplement coloration,
                     incluant aussi la teinture des cheveux, désigne la pratique
                     cosmétique du changement de la couleur des cheveux. ~ A

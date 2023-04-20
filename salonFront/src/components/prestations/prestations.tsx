@@ -18,28 +18,24 @@ function TableauPresations(/* props: { setPage: any; setUpdateProd: any } */) {
   }, []);
   console.log(prod);
 
-  const test = prod?.map((data: Tpresta, i: number) => (
-    <tr>
-      <th scope="row">{data.nom}</th>
-      <td>{data.description}</td>
-      <td>{data.temps}</td>
-      <td>{data.prix}</td>
-    </tr>
+  const liste = prod?.map((data: Tpresta) => (
+    <ul className="list-group list-group-flush">
+      <li className="list-groupe-item" /* onClick={alert} */>
+        <strong>{data.nom}:</strong>&nbsp;{data.description}
+        <br /> <strong>DUREE:</strong>&nbsp;{data.temps}
+        &emsp; <strong>PRIX:</strong>&nbsp;
+        {data.prix}€
+      </li>
+      <li className="list-group-item"></li>
+    </ul>
   ));
 
   return (
-    <div className="m-5">
-      <table className="table table-striped-columns">
-        <thead>
-          <tr>
-            <th scope="col">Nom</th>
-            <th scope="col">Description</th>
-            <th scope="col">Durée</th>
-            <th scope="col">Prix en €</th>
-          </tr>
-        </thead>
-        <tbody>{test}</tbody>
-      </table>
+    <div>
+      <div className="card rounded-0">
+        <div className="card-header">Prestations/Prix</div>
+        {liste}
+      </div>
     </div>
   );
 }

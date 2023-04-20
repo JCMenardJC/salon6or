@@ -1,0 +1,15 @@
+.input-group,input,select,option,textarea,.button{
+    background-color:#fdddb5 !important;
+    color: #08321e;
+    font-family: 'Playfair Display SC', serif;
+}
+
+.input-group-text{
+    background-color: #E3C6A2 !important;
+    color: #08321e;
+    font-family: 'Playfair Display SC', serif;
+}
+p{
+        font-family: 'Playfair Display SC', serif;
+        color: #fdddb5 ;
+}

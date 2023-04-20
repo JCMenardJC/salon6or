@@ -3,8 +3,8 @@ h2,
 h3,
 h4,
 h5 span,
-p {
-    /* color: #fdddb5; */
+p ,.info{
+    color: #08321e;
     font-family: 'Playfair Display SC', serif;
 }
 
@@ -15,7 +15,7 @@ ul {
 }
 
 .content {
-    height: 100vh;
+    height: auto;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -90,7 +90,7 @@ ul {
 }
 
 .info header {
-    color: #FFF;
+    color: #08321e;
     padding: 7px 10px;
     font-weight: bold;
     height: 195px;
