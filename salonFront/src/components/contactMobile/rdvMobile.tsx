@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Tpresta } from "../../types/prestation.type";
 
-function Rdv() {
+function RdvMobile() {
   const [prod, setProd] = useState<Tpresta[]>();
 
   const baseUrl = "http://localhost:3000/prestations";
@@ -37,16 +37,16 @@ function Rdv() {
     <div>
       <div className="input-group mb-3 rounded-0">
         <label className="input-group-text" htmlFor="inputGroupSelect01">
-          Prestations
+          <i className="bi bi-scissors"></i>
         </label>
         <select className="form-select" id="inputGroupSelect01" name="presta">
-          <option selected>Choix...</option>
+          <option selected>Prestations...</option>
           {option}
         </select>
       </div>
       <div className="input-group mb-3">
         <label className="input-group-text" htmlFor="dateRdv">
-          Date et heure du rendez-vous
+          <i className="bi bi-calendar3"></i>
         </label>
         <input
           /*           placeholder="jj/mm/aaaa" */
@@ -59,4 +59,4 @@ function Rdv() {
     </div>
   );
 }
-export default Rdv;
+export default RdvMobile;

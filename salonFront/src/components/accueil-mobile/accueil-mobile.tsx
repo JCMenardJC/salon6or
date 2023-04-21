@@ -4,7 +4,7 @@ function AccueilMobile() {
       <div className="accordion-item">
         <h2 className="accordion-header" id="flush-headingOneX">
           <img
-            src="image52.jpg"
+            src="img/image52.jpg"
             className="accordion-button collapsed"
             data-mdb-toggle="collapse"
             data-mdb-target="#flush-collapseOneX"

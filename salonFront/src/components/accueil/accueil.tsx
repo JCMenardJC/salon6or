@@ -5,7 +5,7 @@ function Accueil() {
     <div className="container-sm" style={{ width: 1000 }}>
       <div className="card text-bg-dark rounded-0">
         <img
-          src="image52.jpg"
+          src="img/image52.jpg"
           className="img-fluid img-principale rounded-0 "
           alt="image_accueil"
         />
@@ -13,8 +13,8 @@ function Accueil() {
           <h1 className="card-title">L'Atelier 6Or</h1>
           <p className="card-text">
             vous accueille entre les mains expertes d'Ophélie. C'est avec force
-            d'une experience de 15 qu'elle saura sublimer votre coiffure et vous
-            afficher sous votre plus beau jour
+            d'une experience de 15 ans qu'elle saura sublimer votre coiffure et
+            vous exposer sous votre plus beau jour
           </p>
         </div>
       </div>

@@ -1,8 +1,8 @@
 import { useContext, useState, useEffect } from "react";
 import "./App.css";
 import Accueil from "./components/accueil/accueil";
-import CoiffureFemme from "./components/coiffureFemme/coiffureFemme";
-import CoiffureHomme from "./components/coiffureHomme/coiffureHomme";
+import CoiffureFemme from "./components/coiffure/coiffureFemme/coiffureFemme";
+import CoiffureHomme from "./components/coiffure/coiffureHomme/coiffureHomme";
 import TableauPresations from "./components/prestations/prestations";
 import Contact from "./components/contact/contact";
 import { Login } from "./components/login/login";
@@ -10,6 +10,8 @@ import CompteUsers from "./components/compteUser/compteUser";
 import AccueilMobile from "./components/accueil-mobile/accueil-mobile";
 import { UContext, UserInit } from "./context/userContext";
 import { AuthContext } from "./context/authContext";
+import Inscription from "./components/inscription/inscription";
+import ContactMobile from "./components/contactMobile/contactMobile";
 
 function App() {
   const { savedToken } = useContext(AuthContext);
@@ -40,7 +42,7 @@ function App() {
   return (
     <div className="App vert container-fluid">
       <img
-        src="logo.png"
+        src="img/logo.png"
         id="logo"
         onClick={() => setPage("")}
         className="img-fluid"
@@ -107,18 +109,6 @@ function App() {
                   Compte
                 </a>
               ) : (
-                <></>
-              )}
-              {hide ? (
-                <a
-                  type="button"
-                  onClick={() => logout()}
-                  className="nav-link nav "
-                  id="deco"
-                >
-                  Déconnexion
-                </a>
-              ) : (
                 <Login
                   className={`nav-link  text-light`}
                   href="#"
@@ -126,6 +116,13 @@ function App() {
                   id="log"
                 />
               )}
+              <a
+                type="button"
+                onClick={() => setPage("inscription")}
+                className="nav-link nav "
+              >
+                Inscription
+              </a>
             </div>
           </div>
         </nav>
@@ -136,10 +133,12 @@ function App() {
         {page === "femme" && <CoiffureFemme />}
         {page === "homme" && <CoiffureHomme />}
         {page === "presta" && <TableauPresations />}
-        {page === "contact" && <Contact />}
+        {page === "contact" && windowWidth > 995 && <Contact />}
+        {page === "contact" && windowWidth < 995 && <ContactMobile />}
         {page === "compte" && (
           <CompteUsers setPage={setPage} logout={logout} TOKEN={TOKEN} />
         )}
+        {page === "inscription" && <Inscription />}
       </div>
     </div>
   );

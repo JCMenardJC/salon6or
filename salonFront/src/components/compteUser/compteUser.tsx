@@ -13,7 +13,7 @@ export default function CompteUsers(props: {
 
   return (
     <div className="container-fluid">
-      <h1>* Bienvenue {user?.prenom} *</h1>
+      <h1>* Bienvenu-e {user?.prenom} *</h1>
       <div className="container ">
         <div className="cadre container-fluid text-center">
           <div className="container">

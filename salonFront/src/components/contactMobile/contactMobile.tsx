@@ -1,16 +1,10 @@
-import {
-  MutableRefObject,
-  useContext,
-  useRef,
-  useState,
-  useEffect,
-} from "react";
-import "./contact.css";
-import Rdv from "./rdv";
-import emailjs from "emailjs-com";
+import { MutableRefObject, useContext, useRef, useState } from "react";
+/* import "./contact.css";
+ */ import emailjs from "emailjs-com";
 import { UContext } from "../../context/userContext";
+import RdvMobile from "./rdvMobile";
 
-function Contact() {
+function ContactMobile() {
   const { user, setUser } = useContext(UContext);
 
   const [alerteEnvoyee, setAlerteEnvoyee] = useState(false);
@@ -19,18 +13,6 @@ function Contact() {
     event.preventDefault();
     // Envoyer le formulaire et traiter la réponse ici
     setAlerteEnvoyee(true);
-  };
-  const MessageComponent = () => {
-    useEffect(() => {
-      const timer = setTimeout(() => {
-        setAlerteEnvoyee(false);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }, []);
-
-    return (
-      <div>{alerteEnvoyee && <p>Votre message a bien été envoyé.</p>}</div>
-    );
   };
 
   const sendEmail = (e: any) => {
@@ -53,23 +35,21 @@ function Contact() {
       );
     e.target.reset();
   };
-
   return (
     <div>
       <img className="image" src="img/logo6or.jpg" alt="logo6or" />
       <div className="container">
-        <div className="row">
+        <div>
           <form
             ref={form}
             onSubmit={(event) => {
               sendEmail(event);
               handleSubmit(event);
             }}
-            className="col-8"
           >
             <div className="input-group rounded-0 mb-3">
               <span className="input-group-text border-dark rounded-0">
-                Nom et Prénom
+                Nom
               </span>
               <input
                 type="text"
@@ -79,6 +59,11 @@ function Contact() {
                 name="nom"
                 required
               />
+            </div>
+            <div className="input-group rounded-0 mb-3">
+              <span className="input-group-text border-dark rounded-0">
+                Prénom
+              </span>
               <input
                 type="text"
                 aria-label="Last name"
@@ -93,7 +78,7 @@ function Contact() {
                 className="input-group-text border-dark rounded-0"
                 id="inputGroup-sizing-default"
               >
-                Mail @
+                <i className="bi bi-envelope-at"></i>
               </span>
               <input
                 type="text"
@@ -101,14 +86,17 @@ function Contact() {
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-default"
                 defaultValue={user?.email!}
+                placeholder="Email"
                 name="email"
                 required
               />
+            </div>
+            <div className="input-group rounded-0 mb-3">
               <span
                 className="input-group-text border-dark rounded-0"
                 id="inputGroup-sizing-default"
               >
-                Téléphone
+                <i className="bi bi-telephone"></i>
               </span>
               <input
                 type="text"
@@ -116,6 +104,7 @@ function Contact() {
                 aria-describedby="inputGroup-sizing-default"
                 defaultValue={user?.telephone}
                 name="telephone"
+                placeholder="06 .. .. .. .."
                 required
               />
             </div>
@@ -124,7 +113,7 @@ function Contact() {
                 className="input-group-text border-dark rounded-0"
                 id="inputGroup-sizing-default"
               >
-                Adresse
+                <i className="bi bi-pin-map"></i>
               </span>
               <input
                 type="text"
@@ -132,6 +121,7 @@ function Contact() {
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-default"
                 defaultValue={user?.adresse}
+                placeholder="Adresse"
                 name="adresse"
               />
             </div>
@@ -140,7 +130,7 @@ function Contact() {
                 className="input-group-text border-dark rounded-0"
                 id="inputGroup-sizing-default"
               >
-                Code Postal
+                CP
               </span>
               <input
                 type="text"
@@ -148,13 +138,16 @@ function Contact() {
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-default"
                 defaultValue={user?.codepostal}
+                placeholder="Code postal"
                 name="cpostal"
               />
+            </div>
+            <div className="input-group rounded-0 mb-3">
               <span
                 className="input-group-text border-dark rounded-0"
                 id="inputGroup-sizing-default"
               >
-                Ville
+                <i className="bi bi-buildings"></i>
               </span>
               <input
                 type="text"
@@ -162,6 +155,7 @@ function Contact() {
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-default"
                 defaultValue={user?.ville}
+                placeholder="Ville"
                 name="ville"
               />
             </div>
@@ -170,7 +164,7 @@ function Contact() {
                 className="input-group-text border-dark rounded-0"
                 htmlFor="inputGroupSelect01"
               >
-                Objet du Message
+                Objet
               </label>
               <select
                 className="form-select border-dark rounded-0"
@@ -185,50 +179,55 @@ function Contact() {
                   className=" border-dark rounded-0"
                   value="Prise de Rendez-vous"
                 >
-                  Prise de Rendez-Vous
+                  Rendez-Vous
                 </option>
                 <option className=" border-dark rounded-0" value="Information">
-                  Information/Conseils
+                  Infos/Conseils
                 </option>
                 <option className=" border-dark rounded-0" value="Autre...">
                   Autre...
                 </option>
               </select>
             </div>
-            <Rdv />
+            <RdvMobile />
             <div className="input-group mb-3">
               <span
                 className="input-group-text border-dark rounded-0"
                 id="inputGroup-sizing-default"
               >
-                Message
+                <i className="bi bi-pencil-square"></i>
               </span>
               <textarea
                 className="form-control border-dark row-2 rounded-0"
                 aria-label="With textarea"
                 name="message"
+                placeholder="Tapez votre message"
               ></textarea>
             </div>
-            <button className="button" type="submit" value={"send"}>
+            <button className="button mb-2" type="submit" value={"send"}>
               Envoyer
             </button>
           </form>
-          <div className="container col-3">
+          {alerteEnvoyee && <p>Votre formulaire a été envoyé avec succès!</p>}
+
+          <div className="mb-3">
             <div className="card">
-              <div className="card-body contact">
+              <div className="card-body rounded-0 contact">
                 Adresse: 123 Bis ROute de Créon 33670 Sadirac
               </div>
             </div>
             <div className="card">
-              <div className="card-body contact">
+              <div className="card-body rounded-0 contact">
                 Mail : lukophenzo@hotmail.fr
               </div>
             </div>
             <div className="card">
-              <div className="card-body contact">Téléphone: 0614153966</div>
+              <div className="card-body rounded-0 contact">
+                Téléphone: 0614153966
+              </div>
             </div>
             <div className="card">
-              <div className="card-body contact">
+              <div className="card-body rounded-0 contact">
                 <a
                   href="https://www.facebook.com/profile.php?id=100063475093465"
                   target="_blank"
@@ -246,11 +245,10 @@ function Contact() {
               </div>
             </div>
           </div>
-          <MessageComponent />
         </div>
       </div>
     </div>
   );
 }
 
-export default Contact;
+export default ContactMobile;

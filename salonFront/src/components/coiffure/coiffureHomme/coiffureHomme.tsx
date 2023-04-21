@@ -1,5 +1,7 @@
-import "./coiffureFemme.css";
-function CoiffureFemme() {
+import "../coiffure.css";
+import "./coiffureHomme.css";
+
+function CoiffureHomme() {
   return (
     <div id="carouselExample" className="carousel slide">
       <div className="carousel-inner ms-5 ps-5">
@@ -11,7 +13,7 @@ function CoiffureFemme() {
                 <div className="info">
                   <header></header>
                   <h3 className="border">La couleur</h3>
-                  <p className="description">
+                  <p>
                     La coloration des cheveux ou plus simplement coloration,
                     incluant aussi la teinture des cheveux, désigne la pratique
                     cosmétique du changement de la couleur des cheveux. ~ A
@@ -139,4 +141,4 @@ function CoiffureFemme() {
     </div>
   );
 }
-export default CoiffureFemme;
+export default CoiffureHomme;

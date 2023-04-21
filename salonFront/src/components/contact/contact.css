@@ -13,3 +13,13 @@ p{
         font-family: 'Playfair Display SC', serif;
         color: #fdddb5 ;
 }
+
+.image {
+    width: 200px;
+    height: 200px;
+}
+
+.contact{
+    background:#08321e ;
+    color:#fdddb5 ;
+}
