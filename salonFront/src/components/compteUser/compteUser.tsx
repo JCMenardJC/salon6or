@@ -30,7 +30,10 @@ export default function CompteUsers(props: {
                 <div>Téléphone : {"0" + user?.telephone}</div>
                 <div>Email : {user?.email}</div>
                 <div className="mt-3  p-3 row"></div>
-                <button onClick={(e) => logout()} className="btn border">
+                <button
+                  onClick={(e) => logout()}
+                  className="btn border rounded-0"
+                >
                   Déconnexion
                 </button>
               </div>

@@ -38,11 +38,7 @@ export function Login({ setPage }: any) {
       })
       .catch((err) => console.error(err));
 
-    setPage("compte"); /* 
-    function changeUser(user: TUser) {
-      setUser(user);
-    }
-    return (e.target[0] = true);*/
+    setPage("compte");
   };
 
   return (

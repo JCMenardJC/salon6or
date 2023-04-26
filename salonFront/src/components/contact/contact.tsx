@@ -185,13 +185,13 @@ function Contact() {
                   className=" border-dark rounded-0"
                   value="Prise de Rendez-vous"
                 >
-                  Prise de Rendez-Vous
+                  Problème prise de Rendez-Vous
                 </option>
                 <option className=" border-dark rounded-0" value="Information">
                   Information/Conseils
                 </option>
                 <option className=" border-dark rounded-0" value="Autre...">
-                  Autre...
+                  Message libre
                 </option>
               </select>
             </div>

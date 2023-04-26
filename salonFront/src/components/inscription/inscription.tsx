@@ -1,6 +1,55 @@
+import { TUser } from "../../types/user.type";
 import "./inscription.css";
+import { useState } from "react";
 
-function Inscription() {
+function Inscription(props: { setPage: any }) {
+  const newUser: TUser = {
+    id: 0,
+    nom: "",
+    prenom: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    telephone: "",
+    adresse: "",
+    codepostal: "",
+    ville: "",
+    admin: false,
+  };
+
+  const [user, setUser] = useState(newUser);
+  const urlAddProduit = "http://localhost:3000/users/register";
+
+  const inputChange = (e: React.BaseSyntheticEvent) => {
+    const { name, value } = e.target;
+    return setUser({ ...user, [name]: value });
+  };
+
+  const newUsers = (e: React.BaseSyntheticEvent) => {
+    e.preventDefault();
+    console.log(e);
+
+    async function fetchData() {
+      console.log(user);
+
+      const response = await fetch(urlAddProduit, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+
+        body: JSON.stringify(user),
+      });
+      const responseJson = await response.json();
+      if (responseJson.message !== "Utilisateur enregistré")
+        alert(responseJson.message);
+      else {
+        props.setPage("register");
+      }
+    }
+
+    fetchData();
+  };
   return (
     <div>
       <h1>Inscription</h1>
@@ -16,6 +65,7 @@ function Inscription() {
                 Mail @
               </span>
               <input
+                onChange={(e) => inputChange(e)}
                 type="text"
                 className="form-control border-dark rounded-0"
                 aria-label="Sizing example input"
@@ -32,6 +82,7 @@ function Inscription() {
                 Mot de passe
               </span>
               <input
+                onChange={(e) => inputChange(e)}
                 type="password"
                 className="form-control border-dark rounded-0"
                 aria-label="Sizing example input"
@@ -57,6 +108,7 @@ function Inscription() {
                 Confirmez le mot de passe
               </span>
               <input
+                onChange={(e) => inputChange(e)}
                 type="password"
                 className="form-control border-dark rounded-0"
                 aria-label="Sizing example input"
@@ -70,6 +122,7 @@ function Inscription() {
                 Nom et Prénom
               </span>
               <input
+                onChange={(e) => inputChange(e)}
                 type="text"
                 aria-label="First name"
                 className="form-control border-dark"
@@ -77,6 +130,7 @@ function Inscription() {
                 required
               />
               <input
+                onChange={(e) => inputChange(e)}
                 type="text"
                 aria-label="Last name"
                 className="form-control border-dark rounded-0"
@@ -92,6 +146,7 @@ function Inscription() {
                 Téléphone
               </span>
               <input
+                onChange={(e) => inputChange(e)}
                 type="text"
                 className="form-control border-dark rounded-0"
                 aria-describedby="inputGroup-sizing-default"
@@ -107,6 +162,7 @@ function Inscription() {
                 Adresse
               </span>
               <input
+                onChange={(e) => inputChange(e)}
                 type="text"
                 className="form-control border-dark rounded-0"
                 aria-label="Sizing example input"
@@ -122,11 +178,12 @@ function Inscription() {
                 Code Postal
               </span>
               <input
+                onChange={(e) => inputChange(e)}
                 type="text"
                 className="form-control border-dark rounded-0"
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-default"
-                name="cpostal"
+                name="codepostal"
               />
               <span
                 className="input-group-text border-dark rounded-0"
@@ -135,6 +192,7 @@ function Inscription() {
                 Ville
               </span>
               <input
+                onChange={(e) => inputChange(e)}
                 type="text"
                 className="form-control border-dark rounded-0"
                 aria-label="Sizing example input"
@@ -142,10 +200,22 @@ function Inscription() {
                 name="ville"
               />
             </div>
-            <button className="btn" type="submit" id="register">
+            <button
+              onClick={(e) => {
+                newUsers(e);
+              }}
+              className="btn"
+              type="submit"
+              id="register"
+            >
               S'incrire
             </button>
-            <button className="btn ms-5" type="button" id="cancel">
+            <button
+              className="btn ms-5"
+              type="button"
+              id="cancel"
+              onClick={() => props.setPage("")}
+            >
               Annuler
             </button>
           </form>

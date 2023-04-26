@@ -1,0 +1,13 @@
+.planity{
+    color: #BDBDBD !important;
+}
+h6{font-family: 'Playfair Display SC', serif !important}
+h3{
+        color: #fdddb5;
+        font-family: 'Playfair Display SC', serif;
+    }
+
+    #btn-planity{
+        background-color: #fdddb5;
+        color: #08321e;
+    }

@@ -7,7 +7,7 @@ export const UserInit = {
   pseudo: "",
   email: "",
   password: "",
-  passwordConfirmed: "",
+  confirmPassword: "",
   telephone: "",
   adresse: "",
   ville: "",

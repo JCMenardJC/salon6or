@@ -12,15 +12,17 @@ import { UContext, UserInit } from "./context/userContext";
 import { AuthContext } from "./context/authContext";
 import Inscription from "./components/inscription/inscription";
 import ContactMobile from "./components/contactMobile/contactMobile";
+import SuccessRegister from "./components/successRegister/successRegister";
+import RendezVous from "./components/rendezVous/rendezVous";
+import RendezVousMedium from "./components/rendezVous.medium/rendezVous.medium";
+import RendezVousMobile from "./components/rendezVous.mobile/rendezVousMobile";
+import InscriptionMobile from "./components/inscription.mobile/inscriptionMobile";
 
 function App() {
   const { savedToken } = useContext(AuthContext);
   const TOKEN = localStorage.getItem("token")!;
-  const { user, setUser } = useContext(UContext);
+  const { setUser } = useContext(UContext);
   const [page, setPage] = useState<string>("");
-  const deco = document.getElementById("deco");
-  const log = document.getElementById("log");
-
   const logout = () => {
     localStorage.clear();
     setUser(UserInit);
@@ -95,10 +97,10 @@ function App() {
               </a>
               <a
                 className="nav-link nav"
-                onClick={() => setPage("contact")}
+                onClick={() => setPage("RDV")}
                 href="#"
               >
-                Contact & Rendez-vous
+                Prise de Rendez-vous
               </a>
               {hide ? (
                 <a
@@ -116,12 +118,23 @@ function App() {
                   id="log"
                 />
               )}
+              {hide ? (
+                <div></div>
+              ) : (
+                <a
+                  type="button"
+                  onClick={() => setPage("inscription")}
+                  className="nav-link nav "
+                >
+                  Inscription
+                </a>
+              )}
               <a
-                type="button"
-                onClick={() => setPage("inscription")}
-                className="nav-link nav "
+                className="nav-link nav"
+                onClick={() => setPage("contact")}
+                href="#"
               >
-                Inscription
+                Contact
               </a>
             </div>
           </div>
@@ -132,13 +145,25 @@ function App() {
         {page === "" && windowWidth < 620 && <AccueilMobile />}
         {page === "femme" && <CoiffureFemme />}
         {page === "homme" && <CoiffureHomme />}
+        {page === "RDV" && windowWidth > 1080 && <RendezVous />}
+        {page === "RDV" && windowWidth < 1080 && windowWidth > 550 && (
+          <RendezVousMedium />
+        )}
+
+        {page === "RDV" && windowWidth < 550 && <RendezVousMobile />}
         {page === "presta" && <TableauPresations />}
         {page === "contact" && windowWidth > 995 && <Contact />}
         {page === "contact" && windowWidth < 995 && <ContactMobile />}
         {page === "compte" && (
           <CompteUsers setPage={setPage} logout={logout} TOKEN={TOKEN} />
         )}
-        {page === "inscription" && <Inscription />}
+        {page === "inscription" && windowWidth > 995 && (
+          <Inscription setPage={setPage} />
+        )}
+        {page === "inscription" && windowWidth < 995 && (
+          <InscriptionMobile setPage={setPage} />
+        )}
+        {page === "register" && <SuccessRegister />}
       </div>
     </div>
   );

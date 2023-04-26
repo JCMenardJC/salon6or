@@ -49,7 +49,7 @@ function Rdv() {
           Date et heure du rendez-vous
         </label>
         <input
-          /*           placeholder="jj/mm/aaaa" */
+          placeholder="jj/mm/aaaa"
           type="datetime-local"
           className="form-control"
           id="dateRdv"
