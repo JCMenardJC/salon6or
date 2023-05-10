@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 
 @Entity('users')
-@Unique(['email', 'pseudo'])
+@Unique(['email'])
 export class User extends BaseEntity {
   @ApiProperty()
   @PrimaryGeneratedColumn()
@@ -27,15 +27,15 @@ export class User extends BaseEntity {
 
   @ApiProperty()
   @Column({ type: 'varchar' })
-  pseudo: string;
-
-  @ApiProperty()
-  @Column({ type: 'varchar' })
   email: string;
 
   @ApiProperty()
-  @Exclude()
   @Column({ type: 'varchar' })
+  telephone: string;
+
+  @ApiProperty()
+  @Column({ type: 'varchar' })
+  @Exclude()
   password: string;
 
   @ApiProperty()
@@ -51,7 +51,7 @@ export class User extends BaseEntity {
   codepostal: string;
 
   @ApiProperty()
-  @Column({ type: 'boolean', default: false })
+  @Column({ default: false })
   admin: boolean;
 
   @ApiProperty()

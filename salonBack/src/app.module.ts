@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -9,9 +14,9 @@ import { ProduitsModule } from './produits/produits.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Prestation } from './prestations/entities/prestation.entity';
-import { AdressesModule } from './adresses/adresses.module';
-import { CoordonneesModule } from './coordonnees/coordonnees.module';
-
+import { User } from './users/entities/user.entity';
+import { AdminMiddleware } from './auth/adminMiddleware';
+import { Produit } from './produits/entities/produit.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env' }),
@@ -22,18 +27,25 @@ import { CoordonneesModule } from './coordonnees/coordonnees.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Prestation],
+      entities: [Prestation, User, Produit],
+      autoLoadEntities: true,
       synchronize: true,
+      logging: false,
     }),
     AuthModule,
     PrestationsModule,
     UsersModule,
     RendezVousModule,
     ProduitsModule,
-    AdressesModule,
-    CoordonneesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule /* implements NestModule */ {
+  /* 
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AdminMiddleware)
+      .forRoutes({ path: 'users/:id', method: RequestMethod.DELETE });
+  } */
+}

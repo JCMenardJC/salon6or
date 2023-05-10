@@ -6,6 +6,8 @@ import {
   IsPostalCode,
   IsOptional,
   IsBoolean,
+  IsNumber,
+  IsNumberString,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -20,11 +22,6 @@ export class CreateUserDto {
   nom: string;
 
   @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  pseudo: string;
-
-  @ApiProperty()
   @IsEmail()
   @IsNotEmpty()
   email: string;
@@ -33,6 +30,16 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   password: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  confirmPassword: string;
+
+  @ApiProperty()
+  @IsNumberString()
+  @IsNotEmpty()
+  telephone: string;
 
   @ApiProperty()
   @IsString()

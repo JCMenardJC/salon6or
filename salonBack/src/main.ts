@@ -1,4 +1,8 @@
-import { ValidationPipe } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  UseInterceptors,
+  ValidationPipe,
+} from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 var cors = require('cors');

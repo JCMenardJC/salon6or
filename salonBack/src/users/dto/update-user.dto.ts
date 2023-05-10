@@ -5,6 +5,7 @@ import {
   IsEmail,
   IsPostalCode,
   IsOptional,
+  IsNumberString,
 } from 'class-validator';
 import { CreateUserDto } from './create-user.dto';
 
@@ -19,10 +20,10 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsString()
   nom: string;
 
-  @ApiProperty()
+  /*   @ApiProperty()
   @IsOptional()
   @IsString()
-  pseudo: string;
+  pseudo: string; */
 
   @ApiProperty()
   @IsOptional()
@@ -33,6 +34,11 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsOptional()
   @IsString()
   password: string;
+
+  @ApiProperty()
+  @IsNumberString()
+  @IsOptional()
+  telephone?: string;
 
   @ApiProperty()
   @IsOptional()

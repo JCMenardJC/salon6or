@@ -11,6 +11,7 @@ import {
   Get,
   Delete,
   NotFoundException,
+  Param,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -19,25 +20,19 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiTags, ApiBody } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { EStatus } from 'src/constants/enum';
-import { LoginDto } from 'src/auth/login.dto';
+import { LoginDto } from 'src/auth/dto/login.dto';
+import { AdminMiddleware } from 'src/auth/adminMiddleware';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @ApiTags('users')
 @Controller('users')
-@UseInterceptors(ClassSerializerInterceptor)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Post('register')
   async create(@Body() createUserDto: CreateUserDto) {
     const saltOrRounds = 10;
-
-    const isPseudoExist = await this.usersService.findOneByPseudo(
-      createUserDto.pseudo,
-    );
-    if (isPseudoExist)
-      throw new ConflictException(
-        'Pseudo déjà utilisé, veuillez changer de pseudo',
-      );
 
     const isEmailExist = await this.usersService.findOneByEmail(
       createUserDto.email,
@@ -45,6 +40,12 @@ export class UsersController {
     if (isEmailExist)
       throw new ConflictException(
         'E-mail déjà utilisé, veuillez entrer un e-mail valide',
+      );
+
+    const confirm = createUserDto.password === createUserDto.confirmPassword;
+    if (!confirm)
+      throw new ConflictException(
+        `La confirmation du mot de passe n'est pas valide`,
       );
 
     const hash = await bcrypt.hash(createUserDto.password, saltOrRounds);
@@ -59,7 +60,7 @@ export class UsersController {
       },
     };
   }
-
+  @UseInterceptors(ClassSerializerInterceptor)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get('users')
@@ -70,12 +71,14 @@ export class UsersController {
     }
     return users;
   }
+
+  @UseInterceptors(ClassSerializerInterceptor)
   @ApiBody({ type: LoginDto })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post('profil')
   async getProfile(@Request() req) {
-    const profil = await this.usersService.findOneByPseudo(req.user.username);
+    const profil = await this.usersService.findOneByEmail(req.user.email);
     return profil;
   }
 
@@ -101,20 +104,12 @@ export class UsersController {
   }
 
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
-  @Delete()
-  async removeUser(@Request() req) {
-    const userDeleted: number = req.user.userId;
-
-    const data = await this.usersService.findOneById(userDeleted);
-    if (!data) {
-      throw new NotFoundException('Votre compte à déjà été supprimé');
-    }
-
-    const userRemoved = await this.usersService.delete(data[0].id);
+  @Delete(':id')
+  async removeUser(@Param('id') id: string) {
+    const userRemoved = await this.usersService.delete(+id);
     return {
       status: EStatus.OK,
-      message: `Le compte numéro ${data[0].id} a été supprimé`,
+      message: `Le compte numéro ${id} a été supprimé`,
       data: userRemoved,
     };
   }

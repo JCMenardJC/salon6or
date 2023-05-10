@@ -9,12 +9,13 @@ export class UsersService {
     const newUser = new User();
     newUser.prenom = createUserDto.prenom;
     newUser.nom = createUserDto.nom;
-    newUser.pseudo = createUserDto.pseudo;
     newUser.email = createUserDto.email;
     newUser.password = hash;
     newUser.adresse = createUserDto.adresse;
     newUser.ville = createUserDto.ville;
     newUser.codepostal = createUserDto.codepostal;
+    newUser.telephone = createUserDto.telephone;
+    newUser.admin = createUserDto.admin;
 
     await newUser.save();
 
@@ -26,29 +27,17 @@ export class UsersService {
     return users;
   }
 
-  async findOneByPseudo(pseudo: string) {
-    const user = await User.findOne({
-      where: { pseudo: pseudo },
-    });
-
-    if (user) {
-      return user;
-    }
-
-    return undefined;
-  }
-
   async findOneByEmail(email: string) {
-    const userMail = await User.findOne({
-      where: { email: email },
+    const userMail = await User.findOneBy({
+      email: email,
     });
 
     return userMail;
   }
 
   async findOneById(id: number) {
-    const user = await User.find({
-      where: { id: id },
+    const user = await User.findOneBy({
+      id: id,
     });
 
     if (user) {
