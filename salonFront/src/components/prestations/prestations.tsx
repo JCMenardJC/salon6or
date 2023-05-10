@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Tpresta } from "../../types/prestation.type";
 import "./prestations.css";
 function TableauPresations(/* props: { setPage: any; setUpdateProd: any } */) {
-  const [prod, setProd] = useState<Tpresta[]>();
+  const [presta, setPresta] = useState<Tpresta[]>();
 
   const baseUrl = "http://localhost:3000/prestations";
   const options = {
@@ -12,13 +12,13 @@ function TableauPresations(/* props: { setPage: any; setUpdateProd: any } */) {
   useEffect(() => {
     fetch(baseUrl, options)
       .then((response) => response.json())
-      .then((donnee) => setProd(donnee))
+      .then((donnee) => setPresta(donnee))
 
       .catch((erreur) => `${erreur}`);
   }, []);
-  console.log(prod);
+  console.log(presta);
 
-  const liste = prod?.map((data: Tpresta) => (
+  const liste = presta?.map((data: Tpresta) => (
     <ul className="list-group list-group-flush">
       <li className="list-groupe-item" /* onClick={alert} */>
         <strong>{data.nom}:</strong>&nbsp;{data.description}
@@ -31,7 +31,7 @@ function TableauPresations(/* props: { setPage: any; setUpdateProd: any } */) {
   ));
 
   return (
-    <div>
+    <div className="mt-2">
       <div className="card rounded-0">
         <div className="card-header">Prestations/Prix</div>
         {liste}

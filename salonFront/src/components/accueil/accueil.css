@@ -1,9 +1,22 @@
-h1, p{
+h1{
 color: #fdddb5 !important;
     font-family: 'Playfair Display SC', serif;
 }
 
 .description{
     color: #08321e !important;
+}
+p.card-text  {
+    color: #fdddb5 !important;
+    font-family: 'Playfair Display SC', serif;
+}
+
+.badge {
+    background-color: red;
+    color: white;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 50%;
+    margin-left: 0.5rem;
 }
 

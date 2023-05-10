@@ -15,6 +15,7 @@ function Inscription(props: { setPage: any }) {
     codepostal: "",
     ville: "",
     admin: false,
+    accessToken: "",
   };
 
   const [user, setUser] = useState(newUser);

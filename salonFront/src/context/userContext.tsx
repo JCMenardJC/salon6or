@@ -1,4 +1,5 @@
 import { TUser } from "../types/user.type";
+import React from "react";
 import { createContext, useState, ReactElement } from "react";
 export const UserInit = {
   id: 0,
@@ -13,6 +14,7 @@ export const UserInit = {
   ville: "",
   codepostal: "",
   admin: false,
+  accessToken: "",
 } as TUser;
 
 interface UserContextProps {
@@ -27,6 +29,11 @@ export interface UserContextInterface {
 export const UContext = createContext<UserContextInterface>({
   user: UserInit,
   setUser: (user: TUser) => {},
+});
+export const UpdateUser = React.createContext({
+  idClient: "",
+
+  setIdClient: (value: string) => {},
 });
 
 export const UserContextProvider = ({ children }: UserContextProps) => {

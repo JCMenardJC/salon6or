@@ -11,6 +11,7 @@ export type TUser =
       ville: string;
       codepostal: string;
       admin: boolean;
+      accessToken: string;
     }
   | null
   | undefined;

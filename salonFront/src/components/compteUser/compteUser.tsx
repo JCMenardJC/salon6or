@@ -1,16 +1,74 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UContext } from "../../context/userContext";
 import "./compteUser.css";
+import AdminUsers from "./admin/admin.users";
+import { TUser } from "../../types/user.type";
+import TableauPresations from "../prestations/prestations";
 
 export default function CompteUsers(props: {
   TOKEN: string;
   setPage: (value: string) => void;
   logout: () => void;
 }) {
+  const [page, setPage] = useState<string>("compte");
   const { user } = useContext(UContext);
   const { logout } = props;
-  console.log(user);
 
+  const [users, setUsers] = useState<TUser[]>([]);
+
+  const baseUrl = "http://localhost:3000/users/users";
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${user?.accessToken}`,
+    },
+  };
+
+  useEffect(() => {
+    fetch(baseUrl, options)
+      .then((response) => response.json())
+      .then((donnee) => setUsers(donnee))
+
+      .catch((erreur) => `${erreur}`);
+  }, []);
+
+  const test = users?.map((data: TUser, i: number) => (
+    <tr>
+      <th scope="row">{data?.id}</th>
+      <td>{data?.prenom}</td>
+      <td>{data?.nom}</td>
+      <td>{data?.email}</td>
+      <td>{data?.telephone}</td>
+      <td>{data?.adresse}</td>
+      <td>{data?.codepostal}</td>
+      <td>{data?.ville}</td>
+      <td>
+        {/*        <button
+          type="button"
+          className="btn btn-primary m-1"
+          onClick={() => {
+            props.setPage("updateForm");
+            props.setUpdateProd(data);
+          }}
+        >
+          Editer
+        </button> */}
+        <button
+          type="button"
+          className="btn btn-danger m-1"
+          onClick={async function deletePost() {
+            await fetch(`http://localhost:3000/produits/${data?.id}`, {
+              method: "DELETE",
+            }); /* 
+            window.location.reload(); */
+          }}
+        >
+          Supprimer
+        </button>
+      </td>
+    </tr>
+  ));
   return (
     <div className="container-fluid">
       <h1>* Bienvenu-e {user?.prenom} *</h1>
@@ -41,6 +99,9 @@ export default function CompteUsers(props: {
           </div>
         </div>
       </div>
+
+      {user?.admin === true && <AdminUsers /* setPage={setPage} */ />}
+      {user?.admin === true && <TableauPresations />}
     </div>
   );
 }

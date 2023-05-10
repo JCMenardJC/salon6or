@@ -8,6 +8,7 @@ export function Login({ setPage }: any) {
   const urlLogin = "http://localhost:3000/auth/login";
   const { user, setUser } = useContext(UContext);
   const { savedToken, onAuthChange } = useContext(AuthContext);
+  /*   console.log(savedToken); */
 
   const dataLogin = {
     email: "",
@@ -33,14 +34,14 @@ export function Login({ setPage }: any) {
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
-
-        return setUser(response), onAuthChange(response.data);
+        setUser(response); /* 
+        onAuthChange(response.data);
+        localStorage.setItem("savedToken", response.data); */
+        setPage("compte");
       })
       .catch((err) => console.error(err));
-
-    setPage("compte");
   };
-
+  /*   console.log(user); */
   return (
     <>
       <a

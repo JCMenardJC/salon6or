@@ -1,0 +1,25 @@
+.card-text2{
+    color: #08321e !important;
+}.card {
+    margin-bottom: 20px;
+}
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+.modal-content{
+    background: #08321e;
+}
+.modal-header{color: #fdddb5;
+    font-family: 'Playfair Display SC', serif;
+}
+button{
+    background: #08321e;
+    color: #fdddb5;
+}
+h3{color: #08321e;}

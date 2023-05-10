@@ -17,11 +17,11 @@ import RendezVous from "./components/rendezVous/rendezVous";
 import RendezVousMedium from "./components/rendezVous.medium/rendezVous.medium";
 import RendezVousMobile from "./components/rendezVous.mobile/rendezVousMobile";
 import InscriptionMobile from "./components/inscription.mobile/inscriptionMobile";
+import Produit from "./components/produits/produits";
 
 function App() {
-  const { savedToken } = useContext(AuthContext);
-  const TOKEN = localStorage.getItem("token")!;
-  const { setUser } = useContext(UContext);
+  const { user, setUser } = useContext(UContext);
+  const TOKEN = user?.accessToken;
   const [page, setPage] = useState<string>("");
   const logout = () => {
     localStorage.clear();
@@ -37,10 +37,7 @@ function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const hide = savedToken !== null;
-  console.log(hide);
-  console.log(savedToken);
-
+  const hide = user?.accessToken !== undefined;
   return (
     <div className="App vert container-fluid">
       <img
@@ -102,6 +99,13 @@ function App() {
               >
                 Prise de Rendez-vous
               </a>
+              <a
+                className="nav-link nav"
+                onClick={() => setPage("boutique")}
+                href="#"
+              >
+                Produits
+              </a>
               {hide ? (
                 <a
                   type="button"
@@ -155,7 +159,7 @@ function App() {
         {page === "contact" && windowWidth > 995 && <Contact />}
         {page === "contact" && windowWidth < 995 && <ContactMobile />}
         {page === "compte" && (
-          <CompteUsers setPage={setPage} logout={logout} TOKEN={TOKEN} />
+          <CompteUsers setPage={setPage} logout={logout} TOKEN={TOKEN!} />
         )}
         {page === "inscription" && windowWidth > 995 && (
           <Inscription setPage={setPage} />
@@ -164,6 +168,7 @@ function App() {
           <InscriptionMobile setPage={setPage} />
         )}
         {page === "register" && <SuccessRegister />}
+        {page === "boutique" && <Produit />}
       </div>
     </div>
   );
