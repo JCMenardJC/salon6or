@@ -1,7 +1,7 @@
 import { Tproduit } from "../../types/produit.type";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./produits.css";
-import { log } from "console";
+import { UContext } from "../../context/userContext";
 
 function Produit() {
   const [prod, setProd] = useState<Tproduit[]>();
@@ -10,6 +10,9 @@ function Produit() {
   >([]);
   const [total, setTotal] = useState(0);
   const [alertePanier, setAlertePanier] = useState("");
+  const [paiementEffectue, setPaiementEffectue] = useState(false);
+
+  const { user, setUser } = useContext(UContext);
 
   const afficherAlertePanier = (nomProduit: string) => {
     setAlertePanier(`${nomProduit} a été ajouté au panier.`);
@@ -47,6 +50,27 @@ function Produit() {
       prevPanier.filter((item) => item.produit.id !== produit.id)
     );
     calculerTotal();
+  };
+  const handlePayer = async () => {
+    if (panier.length > 0) {
+      const response = await fetch("http://localhost:3000/commandes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user: user,
+          produits: panier.map(({ produit }) => produit),
+          prix_total: total,
+          payee: true,
+          livree: false,
+        }),
+      });
+      if (response.ok) {
+        setPanier([]);
+        setTotal(0);
+        setAlertePanier("");
+        setPaiementEffectue(true);
+      }
+    }
   };
 
   const calculerTotal = () => {
@@ -146,7 +170,9 @@ function Produit() {
         partenaires.
       </p>
 
-      <h2>Les Produits que vous retrouverez en vente chez L'Atelier 6Or</h2>
+      <h2 className="enVente">
+        Les Produits que vous retrouverez en vente chez L'Atelier 6Or
+      </h2>
       <div className="card-container">{card}</div>
       <button
         className="btn btn-primary panier-btn"
@@ -217,9 +243,15 @@ function Produit() {
               >
                 Fermer
               </button>
-              <button type="button" className="btn btn-primary">
+              <button
+                type="button"
+                onClick={handlePayer}
+                disabled={panier.length === 0 || paiementEffectue}
+                className="btn btn-primary"
+              >
                 Payer
               </button>
+              {paiementEffectue && <p>Paiement effectué !</p>}
             </div>
           </div>
         </div>

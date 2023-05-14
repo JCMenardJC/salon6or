@@ -5,7 +5,7 @@ import { AuthContext } from "../../../context/authContext";
 import { table } from "console";
 import UpUser from "./updateUser";
 
-function AdminUsers(/* setPage: any, setUpdateProd: any */) {
+function AdminUsers() {
   const { user, setUser } = useContext(UContext);
   const [users, setUsers] = useState<TUser[]>([]);
 
@@ -35,42 +35,45 @@ function AdminUsers(/* setPage: any, setUpdateProd: any */) {
     setUsers((prevUsers) => prevUsers.filter((user) => user!.id !== id));
   };
 
-  const test = users?.map((clients: TUser, i: number) => (
-    <tr key={clients?.id}>
-      <th scope="row">{clients?.id}</th>
-      <td>{clients?.prenom}</td>
-      <td>{clients?.nom}</td>
-      <td>{clients?.email}</td>
-      <td>{clients?.telephone}</td>
-      <td>{clients?.adresse}</td>
-      <td>{clients?.codepostal}</td>
-      <td>{clients?.ville}</td>
-      <td>
-        <button
-          type="button"
-          className="btn"
-          data-bs-toggle="modal"
-          data-bs-target="#modalEdit"
-        >
-          Editer
-        </button>
-        <UpUser clients={clients} />
-        <button
-          type="button"
-          className="btn btn-danger m-1"
-          onClick={async () => {
-            await fetch(`http://localhost:3000/users/${clients?.id}`, {
-              method: "DELETE",
-            });
-            handleDelete(clients!.id);
-            alert("utilisateur supprimé");
-          }}
-        >
-          Supprimer
-        </button>
-      </td>
-    </tr>
-  ));
+  const test = users?.map(
+    (clients: TUser, i: number) =>
+      clients?.email !== user?.email && (
+        <tr key={clients?.id}>
+          <th scope="row">{clients?.id}</th>
+          <td>{clients?.prenom}</td>
+          <td>{clients?.nom}</td>
+          <td>{clients?.email}</td>
+          <td>{clients?.telephone}</td>
+          <td>{clients?.adresse}</td>
+          <td>{clients?.codepostal}</td>
+          <td>{clients?.ville}</td>
+          <td>
+            <button
+              type="button"
+              className="btn"
+              data-bs-toggle="modal"
+              data-bs-target="#modalEdit"
+            >
+              Editer
+            </button>
+            <UpUser clients={clients} />
+            <button
+              type="button"
+              className="btn btn-danger m-1"
+              onClick={async () => {
+                await fetch(`http://localhost:3000/users/${clients?.id}`, {
+                  method: "DELETE",
+                });
+                handleDelete(clients!.id);
+                alert("utilisateur supprimé");
+              }}
+            >
+              Supprimer
+            </button>
+          </td>
+        </tr>
+      )
+  );
 
   return (
     <div className="mt-2">

@@ -4,6 +4,7 @@ import "./compteUser.css";
 import AdminUsers from "./admin/admin.users";
 import { TUser } from "../../types/user.type";
 import TableauPresations from "../prestations/prestations";
+import CommandeListe from "../commandeList/commandeList";
 
 export default function CompteUsers(props: {
   TOKEN: string;
@@ -44,24 +45,13 @@ export default function CompteUsers(props: {
       <td>{data?.codepostal}</td>
       <td>{data?.ville}</td>
       <td>
-        {/*        <button
-          type="button"
-          className="btn btn-primary m-1"
-          onClick={() => {
-            props.setPage("updateForm");
-            props.setUpdateProd(data);
-          }}
-        >
-          Editer
-        </button> */}
         <button
           type="button"
           className="btn btn-danger m-1"
           onClick={async function deletePost() {
             await fetch(`http://localhost:3000/produits/${data?.id}`, {
               method: "DELETE",
-            }); /* 
-            window.location.reload(); */
+            });
           }}
         >
           Supprimer
@@ -71,7 +61,7 @@ export default function CompteUsers(props: {
   ));
   return (
     <div className="container-fluid">
-      <h1>* Bienvenu-e {user?.prenom} *</h1>
+      <h1>Bienvenu-e {user?.prenom}</h1>
       <div className="container ">
         <div className="cadre container-fluid text-center">
           <div className="container">
@@ -99,8 +89,8 @@ export default function CompteUsers(props: {
           </div>
         </div>
       </div>
-
       {user?.admin === true && <AdminUsers /* setPage={setPage} */ />}
+      <CommandeListe />
       {user?.admin === true && <TableauPresations />}
     </div>
   );
