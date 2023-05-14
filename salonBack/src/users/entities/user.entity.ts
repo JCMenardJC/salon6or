@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
+import { Commande } from 'src/commande/entities/commande.entity';
 import {
   BaseEntity,
   Column,
@@ -57,4 +58,7 @@ export class User extends BaseEntity {
   @ApiProperty()
   @Column({ type: 'varchar', nullable: true })
   avatar: string;
+
+  @OneToMany(() => Commande, (commande) => commande.user)
+  commande: Commande[];
 }

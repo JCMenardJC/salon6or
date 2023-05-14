@@ -17,6 +17,8 @@ import { Prestation } from './prestations/entities/prestation.entity';
 import { User } from './users/entities/user.entity';
 import { AdminMiddleware } from './auth/adminMiddleware';
 import { Produit } from './produits/entities/produit.entity';
+import { Commande } from './commande/entities/commande.entity';
+import { CommandeModule } from './commande/commande.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env' }),
@@ -27,7 +29,7 @@ import { Produit } from './produits/entities/produit.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Prestation, User, Produit],
+      entities: [Prestation, User, Produit, Commande],
       autoLoadEntities: true,
       synchronize: true,
       logging: false,
@@ -37,15 +39,9 @@ import { Produit } from './produits/entities/produit.entity';
     UsersModule,
     RendezVousModule,
     ProduitsModule,
+    CommandeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule /* implements NestModule */ {
-  /* 
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(AdminMiddleware)
-      .forRoutes({ path: 'users/:id', method: RequestMethod.DELETE });
-  } */
-}
+export class AppModule {}

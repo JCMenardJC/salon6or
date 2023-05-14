@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseEntity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Commande } from 'src/commande/entities/commande.entity';
+import {
+  BaseEntity,
+  Column,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Entity } from 'typeorm/decorator/entity/Entity';
 
 @Entity()
@@ -23,4 +30,8 @@ export class Produit extends BaseEntity {
   @ApiProperty()
   @Column({ type: 'decimal' })
   prix: number;
+
+  @ManyToMany(() => Commande, (commande) => commande.produits)
+  @JoinTable()
+  commandes: Commande[];
 }
