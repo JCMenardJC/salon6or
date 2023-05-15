@@ -111,14 +111,14 @@ function Produit() {
           <input
             type="number"
             id={`quantite-${data.id}`}
-            className="form-control"
+            className="form-control mt-1"
             defaultValue={1}
             min={1}
             max={10}
           />
         </div>
         <button
-          className="btn btn-primary"
+          className="btn btn-primary mt-3"
           onClick={() => {
             const quantite = (
               document.getElementById(`quantite-${data.id}`) as HTMLInputElement
@@ -175,7 +175,7 @@ function Produit() {
       </h2>
       <div className="card-container">{card}</div>
       <button
-        className="btn btn-primary panier-btn"
+        className="btn btn-primary panier-btn mt-3"
         data-bs-toggle="modal"
         data-bs-target="#panierModal"
         onClick={() => calculerTotal()}
