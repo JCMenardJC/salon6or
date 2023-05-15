@@ -72,16 +72,4 @@ export class CommandeService {
     }
     await Commande.delete(id);
   }
-
-  async produitsExistent(produitsIds: number[]): Promise<Produit[]> {
-    const produits = await Produit.find({
-      where: {
-        id: In(produitsIds),
-      },
-    });
-    if (produits.length !== produitsIds.length) {
-      throw new NotFoundException("Un ou plusieurs produits n'existent pas");
-    }
-    return produits;
-  }
 }

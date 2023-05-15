@@ -10,18 +10,13 @@ import {
 import { CommandeService } from './commande.service';
 import { CreateCommandeDto } from './dto/create-commande.dto';
 import { UpdateCommandeDto } from './dto/update-commande.dto';
-import { Commande } from './entities/commande.entity';
-import { GetUser } from 'src/auth/get-user.decorator';
-import { User } from 'src/users/entities/user.entity';
 
 @Controller('commandes')
 export class CommandeController {
   constructor(private readonly commandeService: CommandeService) {}
 
   @Post()
-  async create(
-    @Body() createCommandeDto: CreateCommandeDto,
-  ): Promise<Commande> {
+  async create(@Body() createCommandeDto: CreateCommandeDto) {
     return await this.commandeService.create(createCommandeDto);
   }
 
