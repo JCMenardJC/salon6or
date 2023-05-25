@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
-import "./Login.css";
-import { TUser } from "../../types/user.type";
+import { useContext, useState } from "react";
 import { UContext } from "../../context/userContext";
-export function Login({ setPage }: any) {
+
+function ModalConnexion({ setPage }: any) {
   const urlLogin = "http://localhost:3000/auth/login";
   const { setUser } = useContext(UContext);
 
@@ -12,16 +11,6 @@ export function Login({ setPage }: any) {
   };
 
   const [dataInput, setDataInput] = useState(dataLogin);
-
-  useEffect(() => {
-    // Vérifier si les informations d'identification sont présentes dans le stockage local
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      setUser(parsedUser);
-      setPage("");
-    }
-  }, []); // Le tableau vide [] assure que ce code ne s'exécute qu'une seule fois après le rendu initial
 
   const inputChange = (e: React.BaseSyntheticEvent) => {
     const { name, value } = e.target;
@@ -39,25 +28,16 @@ export function Login({ setPage }: any) {
     fetch(urlLogin, option)
       .then((response) => response.json())
       .then((response) => {
-        setUser(response);
-
-        // Stocker les informations d'identification dans le stockage local
-        localStorage.setItem("user", JSON.stringify(response));
+        console.log(response);
+        setUser(response); /* 
+        onAuthChange(response.data);
+        localStorage.setItem("savedToken", response.data); */
         setPage("compte");
       })
       .catch((err) => console.error(err));
   };
-  /*   console.log(user); */
   return (
-    <>
-      <a
-        type="button"
-        className="nav-link nav"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      >
-        Connexion
-      </a>
+    <div>
       <form onSubmit={(e) => login(e)}>
         <div
           className="modal fade"
@@ -122,6 +102,7 @@ export function Login({ setPage }: any) {
           </div>
         </div>
       </form>
-    </>
+    </div>
   );
 }
+export default ModalConnexion;

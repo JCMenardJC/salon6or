@@ -9,7 +9,6 @@ import { Login } from "./components/login/login";
 import CompteUsers from "./components/compteUser/compteUser";
 import AccueilMobile from "./components/accueil-mobile/accueil-mobile";
 import { UContext, UserInit } from "./context/userContext";
-import { AuthContext } from "./context/authContext";
 import Inscription from "./components/inscription/inscription";
 import ContactMobile from "./components/contactMobile/contactMobile";
 import SuccessRegister from "./components/successRegister/successRegister";
@@ -104,7 +103,7 @@ function App() {
                 onClick={() => setPage("boutique")}
                 href="#"
               >
-                Produits
+                Boutique
               </a>
               {hide ? (
                 <a
@@ -123,7 +122,13 @@ function App() {
                 />
               )}
               {hide ? (
-                <div></div>
+                <a
+                  type="button"
+                  onClick={() => logout()}
+                  className="nav-link nav "
+                >
+                  Déconnexion
+                </a>
               ) : (
                 <a
                   type="button"
@@ -155,11 +160,16 @@ function App() {
         )}
 
         {page === "RDV" && windowWidth < 550 && <RendezVousMobile />}
-        {page === "presta" && <TableauPresations />}
+        {page === "presta" && <TableauPresations setPage={setPage} />}
         {page === "contact" && windowWidth > 995 && <Contact />}
         {page === "contact" && windowWidth < 995 && <ContactMobile />}
         {page === "compte" && (
-          <CompteUsers setPage={setPage} logout={logout} TOKEN={TOKEN!} />
+          <CompteUsers
+            setPage={setPage}
+            logout={logout}
+            TOKEN={TOKEN!}
+            windowWidth={windowWidth}
+          />
         )}
         {page === "inscription" && windowWidth > 995 && (
           <Inscription setPage={setPage} />

@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { TUser } from "../../../types/user.type";
-import { UContext, UserInit } from "../../../context/userContext";
-import { AuthContext } from "../../../context/authContext";
-import { table } from "console";
+import { UContext } from "../../../context/userContext";
 import UpUser from "./updateUser";
 
 function AdminUsers() {

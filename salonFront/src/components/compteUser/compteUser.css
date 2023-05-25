@@ -12,3 +12,9 @@ font-family: 'Playfair Display SC', serif;
             font-family: 'Playfair Display SC', serif;
                 background: #08321e;
 }
+
+.accordion-button{
+    color: #08321e;
+        font-family: 'Playfair Display SC', serif;
+        background: #fdddb5;
+}

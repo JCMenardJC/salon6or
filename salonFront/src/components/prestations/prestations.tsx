@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Tpresta } from "../../types/prestation.type";
 import "./prestations.css";
-function TableauPresations(/* props: { setPage: any; setUpdateProd: any } */) {
-  const [presta, setPresta] = useState<Tpresta[]>();
+import { UContext } from "../../context/userContext";
+import CreerPrestation from "./creerPrestation";
+function TableauPresations(props: { setPage: any }) {
+  const { user, setUser } = useContext(UContext);
+  const [presta, setPresta] = useState<Tpresta[]>([]);
 
   const baseUrl = "http://localhost:3000/prestations";
   const options = {
@@ -18,6 +21,10 @@ function TableauPresations(/* props: { setPage: any; setUpdateProd: any } */) {
   }, []);
   console.log(presta);
 
+  const handleDelete = (id: number) => {
+    setPresta((prevPresta) => prevPresta?.filter((data) => data.id !== id));
+  };
+
   const liste = presta?.map((data: Tpresta) => (
     <ul className="list-group list-group-flush">
       <li className="list-groupe-item" /* onClick={alert} */>
@@ -25,6 +32,33 @@ function TableauPresations(/* props: { setPage: any; setUpdateProd: any } */) {
         <br /> <strong>DUREE:</strong>&nbsp;{data.temps}
         &emsp; <strong>PRIX:</strong>&nbsp;
         {data.prix}€
+        <div>
+          {user?.admin ? (
+            <>
+              <button
+                type="button"
+                className="btn"
+                data-bs-toggle="modal"
+                data-bs-target="#modalEdit"
+              >
+                Editer
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger m-1"
+                onClick={async () => {
+                  await fetch(`http://localhost:3000/prestations/${data.id}`, {
+                    method: "DELETE",
+                  });
+                  handleDelete(data.id);
+                  alert("Prestation supprimée");
+                }}
+              >
+                Supprimer
+              </button>
+            </>
+          ) : null}
+        </div>
       </li>
       <li className="list-group-item"></li>
     </ul>
@@ -36,6 +70,9 @@ function TableauPresations(/* props: { setPage: any; setUpdateProd: any } */) {
         <div className="card-header">Prestations/Prix</div>
         {liste}
       </div>
+      {user?.admin ? (
+        <CreerPrestation presta={presta} setPage={props.setPage} />
+      ) : null}
     </div>
   );
 }

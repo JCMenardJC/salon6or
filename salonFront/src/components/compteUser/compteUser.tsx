@@ -5,11 +5,13 @@ import AdminUsers from "./admin/admin.users";
 import { TUser } from "../../types/user.type";
 import TableauPresations from "../prestations/prestations";
 import CommandeListe from "../commandeList/commandeList";
+import ListingProduits from "../produits/listingProduits";
 
 export default function CompteUsers(props: {
   TOKEN: string;
   setPage: (value: string) => void;
   logout: () => void;
+  windowWidth: any;
 }) {
   const [page, setPage] = useState<string>("compte");
   const { user } = useContext(UContext);
@@ -89,9 +91,102 @@ export default function CompteUsers(props: {
           </div>
         </div>
       </div>
-      {user?.admin === true && <AdminUsers /* setPage={setPage} */ />}
-      <CommandeListe />
-      {user?.admin === true && <TableauPresations />}
+      {user?.admin ? (
+        <>
+          <div
+            className="accordion accordion-flush mt-3"
+            id="accordionFlushExample"
+          >
+            <div className="accordion-item">
+              <h2 className="accordion-header">
+                <button
+                  className="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#flush-collapseOne"
+                  aria-expanded="false"
+                  aria-controls="flush-collapseOne"
+                >
+                  Listing clientèle
+                </button>
+              </h2>
+              <div
+                id="flush-collapseOne"
+                className="accordion-collapse collapse"
+                data-bs-parent="#accordionFlushExample"
+              >
+                <AdminUsers /* setPage={setPage} */ />
+              </div>
+            </div>
+            <div className="accordion-item">
+              <h2 className="accordion-header">
+                <button
+                  className="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#flush-collapseTwo"
+                  aria-expanded="false"
+                  aria-controls="flush-collapseTwo"
+                >
+                  Listing des commandes
+                </button>
+              </h2>
+              <div
+                id="flush-collapseTwo"
+                className="accordion-collapse collapse"
+                data-bs-parent="#accordionFlushExample"
+              >
+                {" "}
+                <CommandeListe windowWidth={props.windowWidth} />
+              </div>
+            </div>
+            <div className="accordion-item">
+              <h2 className="accordion-header">
+                <button
+                  className="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#flush-collapseFour"
+                  aria-expanded="false"
+                  aria-controls="flush-collapseFour"
+                >
+                  Listing des produits
+                </button>
+              </h2>
+              <div
+                id="flush-collapseFour"
+                className="accordion-collapse collapse"
+                data-bs-parent="#accordionFlushExample"
+              >
+                <ListingProduits setPage={setPage} />
+              </div>
+            </div>
+            <div className="accordion-item">
+              <h2 className="accordion-header">
+                <button
+                  className="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#flush-collapseThree"
+                  aria-expanded="false"
+                  aria-controls="flush-collapseThree"
+                >
+                  Listing des prestations
+                </button>
+              </h2>
+              <div
+                id="flush-collapseThree"
+                className="accordion-collapse collapse"
+                data-bs-parent="#accordionFlushExample"
+              >
+                {" "}
+                <TableauPresations setPage={setPage} />
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
+      {user?.admin ? null : <CommandeListe windowWidth={props.windowWidth} />}
     </div>
   );
 }

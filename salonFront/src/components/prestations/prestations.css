@@ -19,6 +19,7 @@ font-size: x-large;}
     list-style-type: none
 }
 
-/* li{
-    cursor: pointer;
-} */
+.btn{
+    vertical-align: baseline;
+    border-radius: 0%;
+}

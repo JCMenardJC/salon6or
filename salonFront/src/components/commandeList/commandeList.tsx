@@ -4,7 +4,7 @@ import { TCommande } from "../../types/commande.type";
 import { Tproduit } from "../../types/produit.type";
 import "./commandeList.css";
 
-function CommandeListe() {
+function CommandeListe(props: { windowWidth: any }) {
   const { user, setUser } = useContext(UContext);
   const [commandes, setCommandes] = useState<TCommande[]>([]);
 
@@ -27,7 +27,6 @@ function CommandeListe() {
       .catch((erreur) => `${erreur}`);
   }, []);
   console.log(commandes);
-  console.log();
 
   const handleLivreeChange = (commande: TCommande) => {
     const updatedCommandes = commandes.map((c) => {
@@ -65,7 +64,11 @@ function CommandeListe() {
               className="btn btn-danger"
               onClick={() => handleDeleteCommande(commande.id)}
             >
-              Supprimer
+              {props.windowWidth > 690 ? (
+                "Supprimer"
+              ) : (
+                <i className="bi bi-trash3"></i>
+              )}
             </button>
           </td>
         </tr>
@@ -86,6 +89,10 @@ function CommandeListe() {
           : "Payée, Livrée"}
       </td>
       <td>
+        {commande.user?.prenom}
+        {commande.user?.nom}
+      </td>
+      <td>
         <button
           className="btn btn-danger"
           onClick={async () => {
@@ -96,7 +103,11 @@ function CommandeListe() {
             alert("Commande Supprimée!");
           }}
         >
-          Supprimer
+          {props.windowWidth > 690 ? (
+            "Supprimer"
+          ) : (
+            <i className="bi bi-trash3"></i>
+          )}
         </button>
       </td>
       <td>
@@ -112,28 +123,37 @@ function CommandeListe() {
   ));
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-12">
-          <h3 className="mt-3 mb-3">Liste des Commandes</h3>
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Produits</th>
-                <th scope="col">Prix Total</th>
-                <th scope="col">Statut</th>
-                <th scope="col">Supprimer</th>
-                {user?.admin === true && <th scope="col">Livré</th>}
-              </tr>
-            </thead>
-            <tbody>
-              {user?.admin === false ? commandesClient : allCommandes}
-            </tbody>
-          </table>
-        </div>
+    <div>
+      {/*       <div className="row">
+        <div className="col-md-12"> */}
+      <h3 className="CList mt-3 mb-3">Liste des Commandes</h3>
+      <div className="table-responsive">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Produits</th>
+              <th scope="col">Prix Total</th>
+              <th scope="col">Statut</th>
+              {user?.admin ? <th scope="col">Client</th> : null}
+              <th scope="col">
+                {props.windowWidth > 690 ? (
+                  "Supprimer"
+                ) : (
+                  <i className="bi bi-trash3"></i>
+                )}
+              </th>
+              {user?.admin ? <th scope="col">Livré</th> : null}
+            </tr>
+          </thead>
+          <tbody>
+            {user?.admin === false ? commandesClient : allCommandes}
+          </tbody>
+        </table>
       </div>
     </div>
+    /*       </div>
+    </div> */
   );
 }
 

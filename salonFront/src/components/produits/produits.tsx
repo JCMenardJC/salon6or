@@ -2,6 +2,8 @@ import { Tproduit } from "../../types/produit.type";
 import { useContext, useEffect, useState } from "react";
 import "./produits.css";
 import { UContext } from "../../context/userContext";
+import { Login } from "../login/login";
+import ModalConnexion from "../modalConnexion/modalConnexion";
 
 function Produit() {
   const [prod, setProd] = useState<Tproduit[]>();
@@ -146,7 +148,6 @@ function Produit() {
       </tr>
     )
   );
-  console.log(panier);
 
   return (
     <div>
@@ -214,7 +215,7 @@ function Produit() {
                   <tr>
                     <th scope="col">Réf.</th>
                     <th scope="col">Nom</th>
-                    <th scope="col">Quantité</th>
+                    <th scope="col">Qté</th>
                     <th scope="col">Prix unitaire</th>
                     <th scope="col">Prix total</th>
                   </tr>

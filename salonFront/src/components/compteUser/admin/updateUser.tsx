@@ -128,24 +128,6 @@ export default function UpUser(props: { clients: TUser }) {
                   name="ville"
                 />
               </div>
-              <button
-                /*    onClick={(e) => {
-                      newUsers(e);
-                    }} */
-                className="btn"
-                type="submit"
-                id="register"
-              >
-                S'incrire
-              </button>
-              <button
-                className="btn ms-5"
-                type="button"
-                id="cancel" /* 
-                    onClick={() => props.setPage("")} */
-              >
-                Annuler
-              </button>
             </div>
             <div className="modal-footer">
               <button
