@@ -59,7 +59,7 @@ export class PrestationsService {
   async remove(id: number) {
     const idPrestation = await Prestation.findOneBy({ id: id });
     if (!idPrestation) {
-      return `Ce produit n'existe pas !Vérifier l'Id SVP`;
+      return `Cette prestation n'existe pas !Vérifier l'Id SVP`;
     }
     await Prestation.remove(idPrestation);
     return idPrestation;

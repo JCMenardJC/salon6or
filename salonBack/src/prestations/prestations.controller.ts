@@ -55,7 +55,7 @@ export class PrestationsController {
     if (!verifProd) {
       return {
         status: 'Erreur',
-        message: `Cette prestation n'existe pas !! Veuillez vérifier l'orthographe s'il vous plait.`,
+        message: `Cette prestation n'existe pas !! Veuillez vérifier son intitulé et/ou l'orthographe s'il vous plait.`,
       };
     }
     return this.prestationsService.findByNom(nom);

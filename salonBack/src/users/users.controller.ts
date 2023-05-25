@@ -104,6 +104,7 @@ export class UsersController {
   }
 
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async removeUser(@Param('id') id: string) {
     const userRemoved = await this.usersService.delete(+id);

@@ -18,7 +18,7 @@ export class CreateProduitDto {
   urlImage: string;
 
   @ApiProperty()
-  @IsDecimal()
+  /* @IsDecimal() */
   @IsNotEmpty()
   prix: number;
 }
