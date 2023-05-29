@@ -1,5 +1,4 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ExtractJwt, Strategy } from 'passport-jwt';
@@ -18,6 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
+  // Cette méthode est utilisée pour valider et décoder le token JWT
   // IMPORTANT IL FAUT GARDER CE NOM DE METHODE
   async validate(payload: any): Promise<User> {
     console.log('validate');

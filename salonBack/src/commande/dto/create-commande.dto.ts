@@ -3,6 +3,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Produit } from 'src/produits/entities/produit.entity';
 import { User } from 'src/users/entities/user.entity';
 
+// Cette classe représente un objet de création de commande.
+
 export class CreateCommandeDto {
   @ApiProperty()
   @IsNumber()

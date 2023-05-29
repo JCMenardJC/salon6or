@@ -1,11 +1,9 @@
 import * as bcrypt from 'bcrypt';
 import {
-  ClassSerializerInterceptor,
   ConflictException,
   Injectable,
   InternalServerErrorException,
   UnauthorizedException,
-  UseInterceptors,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
@@ -14,6 +12,7 @@ import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt/dist';
 
+// Ce service gère l'authentification des utilisateurs.
 @Injectable()
 export class AuthService {
   constructor(
@@ -23,26 +22,27 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  // Méthode pour s'inscrire en tant qu'utilisateur
   async register(createUserDto: CreateUserDto) {
     const { email, password } = createUserDto;
 
-    // hashage du mot de passe
+    // Hashage du mot de passe
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // création d'une entité user
+    // Création d'une entité user
     const user = this.userRepository.create({
       email,
       password: hashedPassword,
     });
 
     try {
-      // enregistrement de l'entité user
+      // Enregistrement de l'entité user
       const createdUser = await this.userRepository.save(user);
       delete createdUser.password;
       return createdUser;
     } catch (error) {
-      // gestion des erreurs
+      // Gestion des erreurs
       if (error.code === '23505') {
         throw new ConflictException('username already exists');
       } else {
@@ -50,18 +50,20 @@ export class AuthService {
       }
     }
   }
+
+  // Méthode pour se connecter en tant qu'utilisateur
   async login(loginDto: LoginDto) {
     const { email, password } = loginDto;
-    const users = await this.userRepository.findOneBy({ email });
+    const user = await this.userRepository.findOneBy({ email });
 
-    if (users && (await bcrypt.compare(password, users.password))) {
-      const payload = { email: users.email, sub: users.id };
+    if (user && (await bcrypt.compare(password, user.password))) {
+      const payload = { email: user.email, sub: user.id };
       const accessToken = await this.jwtService.sign(payload);
-      console.log(users);
-      return { accessToken, ...users };
+      console.log(user);
+      return { accessToken, ...user };
     } else {
       throw new UnauthorizedException(
-        'Ces identifiants sont incorectes,veuillez verifier vos données',
+        'Ces identifiants sont incorrects, veuillez vérifier vos données',
       );
     }
   }

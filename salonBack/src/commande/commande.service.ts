@@ -1,14 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { In } from 'typeorm';
 import { Commande } from './entities/commande.entity';
 import { CreateCommandeDto } from './dto/create-commande.dto';
 import { UpdateCommandeDto } from './dto/update-commande.dto';
-import { Produit } from 'src/produits/entities/produit.entity';
-import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class CommandeService {
+  // Ce service gère les opérations liées aux commandes.
+
   async create(createCommandeDto: CreateCommandeDto) {
     const { produits, user, ...rest } = createCommandeDto;
 
@@ -24,6 +22,7 @@ export class CommandeService {
   }
 
   async findAll() {
+    // Retourne toutes les commandes avec les relations "produits" et "user".
     const allCommandes = await Commande.find({
       relations: ['produits', 'user'],
     });
@@ -31,6 +30,7 @@ export class CommandeService {
   }
 
   async findOne(id: number) {
+    // Retourne une commande spécifique en fonction de l'ID, avec les relations "produits" et "user".
     const commande = await Commande.findOne({
       where: { id },
       relations: ['produits', 'user'],
@@ -45,6 +45,7 @@ export class CommandeService {
     id: number,
     updateCommandeDto: UpdateCommandeDto,
   ): Promise<Commande> {
+    // Met à jour une commande spécifique en fonction de l'ID avec les données du DTO de mise à jour.
     const { produits, ...rest } = updateCommandeDto;
 
     const commande = await Commande.findOne({
@@ -64,6 +65,7 @@ export class CommandeService {
   }
 
   async remove(id: number): Promise<void> {
+    // Supprime une commande spécifique en fonction de l'ID.
     const commande = await Commande.findOne({
       where: { id: id },
     });

@@ -11,6 +11,8 @@ import {
   BaseEntity,
 } from 'typeorm';
 
+// Cette classe représente l'entité "Commande" dans la base de données.
+
 @Entity()
 export class Commande extends BaseEntity {
   @PrimaryGeneratedColumn()

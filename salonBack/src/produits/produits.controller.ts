@@ -8,17 +8,20 @@ import {
   Delete,
   Request,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { ProduitsService } from './produits.service';
 import { CreateProduitDto } from './dto/create-produit.dto';
 import { UpdateProduitDto } from './dto/update-produit.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('produits')
 export class ProduitsController {
   constructor(private readonly produitsService: ProduitsService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   async create(
     @Body() createProduitDto: CreateProduitDto,
     @Request() req,
@@ -45,6 +48,7 @@ export class ProduitsController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.produitsService.findAll();
   }
@@ -62,11 +66,13 @@ export class ProduitsController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   findOne(@Param('id') id: string) {
     return this.produitsService.findOneById(+id);
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   async update(
     @Param('id') id: string,
     @Body() updateProduitDto: UpdateProduitDto,
@@ -87,6 +93,7 @@ export class ProduitsController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   async remove(@Param('id') id: string) {
     const dataCheck = await this.produitsService.findOneById(+id);
     if (!dataCheck) {
