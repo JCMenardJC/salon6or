@@ -21,7 +21,6 @@ export class ProduitsController {
   constructor(private readonly produitsService: ProduitsService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard)
   async create(
     @Body() createProduitDto: CreateProduitDto,
     @Request() req,
@@ -48,7 +47,6 @@ export class ProduitsController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.produitsService.findAll();
   }
@@ -71,8 +69,8 @@ export class ProduitsController {
     return this.produitsService.findOneById(+id);
   }
 
-  @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  @Patch(':id') /* 
+  @UseGuards(JwtAuthGuard) */
   async update(
     @Param('id') id: string,
     @Body() updateProduitDto: UpdateProduitDto,
@@ -92,8 +90,8 @@ export class ProduitsController {
     };
   }
 
-  @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @Delete(':id') /* 
+  @UseGuards(JwtAuthGuard) */
   async remove(@Param('id') id: string) {
     const dataCheck = await this.produitsService.findOneById(+id);
     if (!dataCheck) {

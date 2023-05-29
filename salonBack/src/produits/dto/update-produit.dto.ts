@@ -19,8 +19,8 @@ export class UpdateProduitDto extends PartialType(CreateProduitDto) {
   @IsOptional()
   urlImage: string;
 
-  @ApiProperty()
-  @IsDecimal()
+  @ApiProperty() /* 
+  @IsDecimal() */
   @IsOptional()
   prix: number;
 }
