@@ -41,7 +41,7 @@ function TableauPresations(props: { setPage: any }) {
                 data-bs-toggle="modal"
                 data-bs-target="#modalEdit"
               >
-                Editer
+                Modifier
               </button>
               <button
                 type="button"

@@ -221,7 +221,10 @@ function Contact() {
             </div>
             <div className="card">
               <div className="card-body contact">
-                Mail : lukophenzo@hotmail.fr
+                <a href="mailto:latelier6or@gmail.com">
+                  {" "}
+                  Mail : latelier6or@gmail.com
+                </a>
               </div>
             </div>
             <div className="card">

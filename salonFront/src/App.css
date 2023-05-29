@@ -30,8 +30,7 @@ font-family: 'Playfair Display SC', serif;}
   cursor: pointer;
 }
 
-/* .deconnexion{
-  cursor: pointer;
-} */
-
-
+.copyright{
+  color: #fdddb5;
+    font-family: 'Playfair Display SC', serif;
+}

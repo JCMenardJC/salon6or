@@ -6,6 +6,7 @@ import UpUser from "./updateUser";
 function AdminUsers() {
   const { user, setUser } = useContext(UContext);
   const [users, setUsers] = useState<TUser[]>([]);
+  const [selectedUser, setSelectedUser] = useState<TUser | null>(null);
 
   const baseUrl = "http://localhost:3000/users/users";
   const options = {
@@ -21,20 +22,21 @@ function AdminUsers() {
       .then((response) => response.json())
       .then((donnee) => {
         console.log(donnee);
-
         setUsers(donnee);
       })
-
       .catch((erreur) => `${erreur}`);
   }, []);
-  console.log(users);
 
   const handleDelete = (id: number) => {
     setUsers((prevUsers) => prevUsers.filter((user) => user!.id !== id));
   };
 
+  const handleEdit = (user: TUser) => {
+    setSelectedUser(user);
+  };
+
   const test = users?.map(
-    (clients: TUser, i: number) =>
+    (clients: TUser) =>
       clients?.email !== user?.email && (
         <tr key={clients?.id}>
           <th scope="row">{clients?.id}</th>
@@ -50,9 +52,10 @@ function AdminUsers() {
               type="button"
               className="btn"
               data-bs-toggle="modal"
-              data-bs-target="#modalEdit"
+              data-bs-target="#modalEdit" /* 
+              onClick={() => handleEdit(clients)} */
             >
-              Editer
+              Modifier
             </button>
             <UpUser clients={clients} />
             <button
@@ -62,6 +65,7 @@ function AdminUsers() {
                 await fetch(`http://localhost:3000/users/${clients?.id}`, {
                   method: "DELETE",
                 });
+
                 handleDelete(clients!.id);
                 alert("utilisateur supprimé");
               }}

@@ -2,6 +2,14 @@ import { useState } from "react";
 import { TUser } from "../../../types/user.type";
 
 export default function UpUser(props: { clients: TUser }) {
+  const [email, setEmail] = useState(props.clients?.email || "");
+  const [nom, setNom] = useState(props.clients?.nom || "");
+  const [prenom, setPrenom] = useState(props.clients?.prenom || "");
+  const [telephone, setTelephone] = useState(props.clients?.telephone || "");
+  const [adresse, setAdresse] = useState(props.clients?.adresse || "");
+  const [codePostal, setCodePostal] = useState(props.clients?.codepostal || "");
+  const [ville, setVille] = useState(props.clients?.ville || "");
+
   return (
     <form action="">
       <div
@@ -25,7 +33,6 @@ export default function UpUser(props: { clients: TUser }) {
               ></button>
             </div>
             <div className="modal-body">
-              {" "}
               <div className="input-group mb-3">
                 <span
                   className="input-group-text border-dark rounded-0"
@@ -34,13 +41,13 @@ export default function UpUser(props: { clients: TUser }) {
                   Mail @
                 </span>
                 <input
-                  /* onChange={(e) => inputChange(e)} */
                   type="text"
                   className="form-control border-dark rounded-0"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-default"
                   name="email"
-                  defaultValue={props.clients?.email || undefined}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
@@ -49,20 +56,21 @@ export default function UpUser(props: { clients: TUser }) {
                   Nom et Prénom
                 </span>
                 <input
-                  /* onChange={(e) => inputChange(e)} */
                   type="text"
                   aria-label="First name"
                   className="form-control border-dark"
                   name="nom"
-                  defaultValue={props.clients?.nom}
+                  value={nom}
+                  onChange={(e) => setNom(e.target.value)}
                   required
                 />
                 <input
-                  /* onChange={(e) => inputChange(e)} */
                   type="text"
                   aria-label="Last name"
                   className="form-control border-dark rounded-0"
                   name="prenom"
+                  value={prenom}
+                  onChange={(e) => setPrenom(e.target.value)}
                   required
                 />
               </div>
@@ -74,11 +82,12 @@ export default function UpUser(props: { clients: TUser }) {
                   Téléphone
                 </span>
                 <input
-                  /* onChange={(e) => inputChange(e)} */
                   type="text"
                   className="form-control border-dark rounded-0"
                   aria-describedby="inputGroup-sizing-default"
                   name="telephone"
+                  value={telephone}
+                  onChange={(e) => setTelephone(e.target.value)}
                   required
                 />
               </div>
@@ -90,12 +99,13 @@ export default function UpUser(props: { clients: TUser }) {
                   Adresse
                 </span>
                 <input
-                  /* onChange={(e) => inputChange(e)} */
                   type="text"
                   className="form-control border-dark rounded-0"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-default"
                   name="adresse"
+                  value={adresse}
+                  onChange={(e) => setAdresse(e.target.value)}
                 />
               </div>
               <div className="input-group mb-3">
@@ -106,12 +116,13 @@ export default function UpUser(props: { clients: TUser }) {
                   Code Postal
                 </span>
                 <input
-                  /* onChange={(e) => inputChange(e)} */
                   type="text"
                   className="form-control border-dark rounded-0"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-default"
                   name="codepostal"
+                  value={codePostal}
+                  onChange={(e) => setCodePostal(e.target.value)}
                 />
                 <span
                   className="input-group-text border-dark rounded-0"
@@ -120,12 +131,13 @@ export default function UpUser(props: { clients: TUser }) {
                   Ville
                 </span>
                 <input
-                  /* onChange={(e) => inputChange(e)} */
                   type="text"
                   className="form-control border-dark rounded-0"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-default"
                   name="ville"
+                  value={ville}
+                  onChange={(e) => setVille(e.target.value)}
                 />
               </div>
             </div>

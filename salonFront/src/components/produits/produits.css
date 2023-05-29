@@ -54,3 +54,7 @@ h3{color: #08321e;}
         padding: 0.5rem;
     }
 }
+.card-content {
+    height: 500px;
+    /* Set a fixed height */
+}

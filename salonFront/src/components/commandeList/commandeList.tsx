@@ -115,7 +115,35 @@ function CommandeListe(props: { windowWidth: any }) {
           <input
             type="checkbox"
             checked={commande.livree}
-            onChange={() => handleLivreeChange(commande)}
+            onChange={async () => {
+              handleLivreeChange(commande);
+              commande.livree
+                ? await fetch(
+                    `http://localhost:3000/commandes/${commande.id}`,
+                    {
+                      method: "PATCH",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        livree: false,
+                      }),
+                    }
+                  )
+                : await fetch(
+                    `http://localhost:3000/commandes/${commande.id}`,
+                    {
+                      method: "PATCH",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        livree: true,
+                      }),
+                    }
+                  );
+              alert("Statut commande modifié");
+            }}
           />
         )}
       </td>

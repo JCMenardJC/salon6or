@@ -2,10 +2,9 @@ import { Tproduit } from "../../types/produit.type";
 import { useContext, useEffect, useState } from "react";
 import "./produits.css";
 import { UContext } from "../../context/userContext";
-import { Login } from "../login/login";
-import ModalConnexion from "../modalConnexion/modalConnexion";
 
-function Produit() {
+/* // Composant Produit qui affiche les produits disponibles, permet de les ajouter au panier et de passer commande
+ */ export default function Produit() {
   const [prod, setProd] = useState<Tproduit[]>();
   const [panier, setPanier] = useState<
     { produit: Tproduit; quantite: number }[]
@@ -13,10 +12,10 @@ function Produit() {
   const [total, setTotal] = useState(0);
   const [alertePanier, setAlertePanier] = useState("");
   const [paiementEffectue, setPaiementEffectue] = useState(false);
+  const { user } = useContext(UContext);
 
-  const { user, setUser } = useContext(UContext);
-
-  const afficherAlertePanier = (nomProduit: string) => {
+  /*   // Affiche une alerte indiquant que le produit a été ajouté au panier
+   */ const afficherAlertePanier = (nomProduit: string) => {
     setAlertePanier(`${nomProduit} a été ajouté au panier.`);
     setTimeout(() => setAlertePanier(""), 2000);
   };
@@ -27,33 +26,54 @@ function Produit() {
     headers: { "Content-Type": "application/json" },
   };
 
-  useEffect(() => {
+  /*   // Récupère les produits disponibles au chargement du composant
+   */ useEffect(() => {
     fetch(baseUrl, options)
       .then((response) => response.json())
       .then((donnee) => setProd(donnee))
       .catch((erreur) => `${erreur}`);
   }, []);
 
-  const handleAddToCart = (produit: Tproduit, quantite: string) => {
+  /*   // Ajoute un produit et sa quantité au panier
+   */ const handleAddToCart = (produit: Tproduit, quantite: string) => {
     const parsedQuantite = parseInt(quantite);
     if (isNaN(parsedQuantite)) {
       return;
     }
-    setPanier((prevPanier) => [
-      ...prevPanier,
-      { produit, quantite: parsedQuantite },
-    ]);
+
+    const prodExist = panier.find((art) => art.produit.id === produit.id);
+    if (prodExist) {
+      const updatedPanier = panier.map((art) => {
+        if (art.produit.id === produit.id) {
+          return {
+            ...art,
+            quantite: art.quantite + parsedQuantite,
+          };
+        }
+        return art;
+      });
+      setPanier(updatedPanier);
+    } else {
+      setPanier((prevPanier) => [
+        ...prevPanier,
+        { produit, quantite: parsedQuantite },
+      ]);
+    }
+
     afficherAlertePanier(produit.nom);
     calculerTotal();
   };
 
-  const handleRemoveFromCart = (produit: Tproduit) => {
+  /*   // Supprime un produit du panier
+   */ const handleRemoveFromCart = (produit: Tproduit) => {
     setPanier((prevPanier) =>
-      prevPanier.filter((item) => item.produit.id !== produit.id)
+      prevPanier.filter((art) => art.produit.id !== produit.id)
     );
     calculerTotal();
   };
-  const handlePayer = async () => {
+
+  /*   // Effectue le paiement en envoyant la commande à la base de données
+   */ const handlePayer = async () => {
     if (panier.length > 0) {
       const response = await fetch("http://localhost:3000/commandes", {
         method: "POST",
@@ -75,7 +95,8 @@ function Produit() {
     }
   };
 
-  const calculerTotal = () => {
+  /*   // Calcule le total du panier
+   */ const calculerTotal = () => {
     let total = 0;
     panier.forEach(({ produit, quantite }) => {
       total += produit.prix * quantite;
@@ -83,17 +104,19 @@ function Produit() {
     setTotal(total);
   };
 
-  useEffect(() => {
+  /*   // Récupère à nouveau les produits disponibles lorsque le panier est modifié
+   */ useEffect(() => {
     fetch(baseUrl, options)
       .then((response) => response.json())
       .then((donnee) => {
         setProd(donnee);
-        setTotal(0); // initialiser la variable total
+        setTotal(0); /* // réinitialiser la variable total */
       })
       .catch((erreur) => `${erreur}`);
   }, []);
 
   const card = prod?.map((data: Tproduit) => (
+    // Affichage de chaque produit sous forme de carte
     <div
       className="card rounded-0 mx-auto my-auto"
       key={data.id}
@@ -104,39 +127,50 @@ function Produit() {
         className="card-img-top"
         alt="Fissure in Sandstone"
       />
-      <div className="card-body">
+      <div className="card-body card-content">
         <h5 className="card-title">{data.nom}</h5>
         <p className="card-text2">{data.description}</p>
         <h6>PRIX: {data.prix}€ TTC</h6>
         <div className="form-group">
           <label htmlFor={`quantite-${data.id}`}>Quantité :</label>
-          <input
-            type="number"
-            id={`quantite-${data.id}`}
-            className="form-control mt-1"
-            defaultValue={1}
-            min={1}
-            max={10}
-          />
+          <div className="align-items-end">
+            <input
+              type="number"
+              id={`quantite-${data.id}`}
+              className="form-control mt-1"
+              defaultValue={1}
+              min={1}
+              max={10}
+              ref={(input) => {
+                if (input) {
+                  input.value = "1";
+                }
+              }}
+            />
+          </div>
+          <button
+            className="btn btn-primary mt-3"
+            onClick={() => {
+              const quantite = (
+                document.getElementById(
+                  `quantite-${data.id}`
+                ) as HTMLInputElement
+              ).value;
+              handleAddToCart(data, quantite);
+            }}
+          >
+            Ajouter au panier
+          </button>
+          <div className="alert">{alertePanier}</div>
         </div>
-        <button
-          className="btn btn-primary mt-3"
-          onClick={() => {
-            const quantite = (
-              document.getElementById(`quantite-${data.id}`) as HTMLInputElement
-            ).value;
-            handleAddToCart(data, quantite);
-          }}
-        >
-          Ajouter au panier
-        </button>
-        <div className="alert">{alertePanier}</div>
       </div>
     </div>
   ));
+
   const panierTab = panier?.map(
     (data: { produit: Tproduit; quantite: number }) => (
-      <tr key={data.produit.id}>
+      /*       // Affichage des produits dans le panier sous forme de tableau
+       */ <tr key={data.produit.id}>
         <th scope="row">{data.produit.id}</th>
         <td>{data.produit.nom}</td>
         <td>{data.quantite}</td>
@@ -154,9 +188,10 @@ function Produit() {
       <h1>
         L'Atelier 6Or travaille essentiellement avec Végétalement Provence®
       </h1>
+      {/* Description de l'entreprise */}
       <p>
         Végétalement Provence est née d’une vision de son fondateur il y a 11
-        ans : révolutionner le secteur du cheveu et de la peau en réinventant
+        ans : révolutionner le secteur du che veu et de la peau en réinventant
         tous les codes avec une valeur tenue au corps : les Hommes avant la
         marque, les Hommes qui font la marque. Une quête de sens, une volonté
         d’impact, un esprit d’initiative, l’audace du changement dont a résulté
@@ -174,7 +209,25 @@ function Produit() {
       <h2 className="enVente">
         Les Produits que vous retrouverez en vente chez L'Atelier 6Or
       </h2>
+
+      <h4>* Connectez-vous pour pouvoir commander</h4>
+      <button
+        className="btn btn-primary panier-btn my-3"
+        data-bs-toggle="modal"
+        data-bs-target="#panierModal"
+        onClick={() => calculerTotal()}
+      >
+        Voir le panier
+        {panier.reduce((total, art) => total + art.quantite, 0) > 0 && (
+          <span className="badge">
+            {panier.reduce((total, art) => total + art.quantite, 0)}
+          </span>
+        )}
+      </button>
+      {/* Affichage des produits */}
       <div className="card-container">{card}</div>
+      <h4>* Connectez-vous pour pouvoir commander</h4>
+      {/* Bouton accès panier */}
       <button
         className="btn btn-primary panier-btn mt-3"
         data-bs-toggle="modal"
@@ -182,13 +235,14 @@ function Produit() {
         onClick={() => calculerTotal()}
       >
         Voir le panier
-        {panier.reduce((total, item) => total + item.quantite, 0) > 0 && (
+        {panier.reduce((total, art) => total + art.quantite, 0) > 0 && (
           <span className="badge">
-            {panier.reduce((total, item) => total + item.quantite, 0)}
+            {panier.reduce((total, art) => total + art.quantite, 0)}
           </span>
         )}
       </button>
 
+      {/* Modal du panier */}
       <div
         className="modal fade"
         id="panierModal"
@@ -239,26 +293,29 @@ function Produit() {
             <div className="modal-footer">
               <button
                 type="button"
+                className="btn btn-primary"
+                onClick={() => handlePayer()}
+              >
+                Payer
+              </button>
+              <button
+                type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 Fermer
               </button>
-              <button
-                type="button"
-                onClick={handlePayer}
-                disabled={panier.length === 0 || paiementEffectue}
-                className="btn btn-primary"
-              >
-                Payer
-              </button>
-              {paiementEffectue && <p>Paiement effectué !</p>}
             </div>
           </div>
         </div>
       </div>
+
+      {/* Message de paiement effectué */}
+      {paiementEffectue && (
+        <div className="alert alert-success">
+          Votre paiement a été effectué avec succès !
+        </div>
+      )}
     </div>
   );
 }
-
-export default Produit;

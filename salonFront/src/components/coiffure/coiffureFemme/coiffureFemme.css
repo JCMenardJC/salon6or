@@ -1,7 +1,46 @@
 .scene:nth-child(1) .movie .poster {
-    background-image: url(./img/image1.jpg);
+    background-image: url(./img/image1.jpg) !important;
 }
 
 .scene:nth-child(1) .info header {
+    background-image: url(./img/image1b.jpg);
+}
+.scene:nth-child(2) .movie .poster {
     background-image: url(./img/image2.jpg);
+}
+
+.scene:nth-child(2) .info header {
+    background-image: url(./img/image1b.jpg);
+}
+.scene:nth-child(3) .movie .poster {
+    background-image: url(./img/image3.jpg);
+}
+
+.scene:nth-child(3) .info header {
+    background-image: url(./img/image1b.jpg);
+}
+.scene:nth-child(4) .movie .poster {
+    background-image: url(./img/image4.jpg);
+}
+
+.scene:nth-child(4) .info header {
+    background-image: url(./img/image1b.jpg);
+}
+.scene:nth-child(5) .movie .poster {
+    background-image: url(./img/image5.jpg);
+}
+
+.scene:nth-child(5) .info header {
+    background-image: url(./img/image1b.jpg);
+}
+.scene:nth-child(6) .movie .poster {
+    background-image: url(./img/image6.jpg);
+}
+
+.scene:nth-child(6) .info header {
+    background-image: url(./img/image2.jpg);
+}
+
+h5{
+    font-family: 'Playfair Display SC', serif;
 }
