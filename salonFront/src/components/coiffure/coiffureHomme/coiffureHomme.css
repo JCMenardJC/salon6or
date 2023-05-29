@@ -1,7 +1,23 @@
-.scene:nth-child(1) .movie .poster {
-    background-image: url(./img/image1.jpg);
+#coiffure1:nth-child(1) .movie .poster {
+    background-image: url(./img/h1.jpg) !important;
 }
 
-.scene:nth-child(1) .info header {
-    background-image: url(./img/image2.jpg);
+#coiffure1:nth-child(1) .info header {
+    background-image: url(./img/h1b.jpg);
+}
+
+#coiffure2:nth-child(2) .movie .poster {
+    background-image: url(./img/h2.jpg) !important;
+}
+
+#coiffure2:nth-child(2) .info header {
+    background-image: url(./img/h2b.jpg);
+}
+
+#coiffure3:nth-child(3) .movie .poster {
+    background-image: url(./img/h3.jpg) !important;
+}
+
+#coiffure3:nth-child(3) .info header {
+    background-image: url(./img/h3b.jpg);
 }

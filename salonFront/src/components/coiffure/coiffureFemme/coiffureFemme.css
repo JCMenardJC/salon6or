@@ -10,35 +10,35 @@
 }
 
 .scene:nth-child(2) .info header {
-    background-image: url(./img/image1b.jpg);
+    background-image: url(./img/image2b.jpg);
 }
 .scene:nth-child(3) .movie .poster {
     background-image: url(./img/image3.jpg);
 }
 
 .scene:nth-child(3) .info header {
-    background-image: url(./img/image1b.jpg);
+    background-image: url(./img/image3b.jpg);
 }
 .scene:nth-child(4) .movie .poster {
     background-image: url(./img/image4.jpg);
 }
 
 .scene:nth-child(4) .info header {
-    background-image: url(./img/image1b.jpg);
+    background-image: url(./img/image4b.jpg);
 }
 .scene:nth-child(5) .movie .poster {
     background-image: url(./img/image5.jpg);
 }
 
 .scene:nth-child(5) .info header {
-    background-image: url(./img/image1b.jpg);
+    background-image: url(./img/image5b.jpg);
 }
 .scene:nth-child(6) .movie .poster {
     background-image: url(./img/image6.jpg);
 }
 
 .scene:nth-child(6) .info header {
-    background-image: url(./img/image2.jpg);
+    background-image: url(./img/image6b.jpg);
 }
 
 h5{

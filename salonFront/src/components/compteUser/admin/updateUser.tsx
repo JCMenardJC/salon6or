@@ -147,10 +147,10 @@ export default function UpUser(props: { clients: TUser }) {
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
-                Close
+                annuler
               </button>
               <button type="button" className="btn btn-primary">
-                Save changes
+                Modifier
               </button>
             </div>
           </div>

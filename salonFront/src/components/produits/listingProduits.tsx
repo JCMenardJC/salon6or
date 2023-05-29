@@ -3,10 +3,22 @@ import { UContext } from "../../context/userContext";
 import { Tproduit } from "../../types/produit.type";
 import CreerProduit from "./creerProduit";
 import "./produits.css";
+import UpProd from "./updateProduit";
 
 export default function ListingProduits(props: { setPage: any }) {
   const { user, setUser } = useContext(UContext);
   const [produit, setProduit] = useState<Tproduit[]>([]);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [productIdToDelete, setProductIdToDelete] = useState<number | null>(
+    null
+  );
+
+  const updateProduit = () => {
+    fetch(baseUrl, options)
+      .then((response) => response.json())
+      .then((donnee) => setProduit(donnee))
+      .catch((erreur) => `${erreur}`);
+  };
 
   const baseUrl = "http://localhost:3000/produits";
   const options = {
@@ -17,58 +29,95 @@ export default function ListingProduits(props: { setPage: any }) {
     fetch(baseUrl, options)
       .then((response) => response.json())
       .then((donnee) => setProduit(donnee))
-
       .catch((erreur) => `${erreur}`);
   }, []);
   console.log(produit);
 
   const handleDelete = (id: number) => {
-    setProduit((prevProduit) => prevProduit?.filter((data) => data.id !== id));
+    setProductIdToDelete(id);
+    setShowConfirmation(true);
   };
 
-  const liste = produit?.map((data: Tproduit) => (
-    <ul className="list-group list-group-flush">
-      <li className="list-groupe-item" /* onClick={alert} */>
-        <strong>{data.nom}:</strong>&nbsp;{data.description}
-        <br /> <strong>ADRESSE DE L'IMAGE:</strong>&nbsp;{data.urlImage}
-        &emsp; <strong>PRIX:</strong>&nbsp;
-        {data.prix}€
-        <div>
-          <>
-            <button
-              type="button"
-              className="btn"
-              data-bs-toggle="modal"
-              data-bs-target="#modalEdit"
-            >
-              Modifier
-            </button>
-            <button
-              type="button"
-              className="btn btn-danger m-1"
-              onClick={async () => {
-                await fetch(`http://localhost:3000/produits/${data.id}`, {
-                  method: "DELETE",
-                });
-                handleDelete(data.id);
-                alert("Produit supprimée");
-              }}
-            >
-              Supprimer
-            </button>
-          </>
-        </div>
-      </li>
-      <li className="list-group-item"></li>
-    </ul>
+  const confirmDelete = async () => {
+    if (productIdToDelete) {
+      await fetch(`http://localhost:3000/produits/${productIdToDelete}`, {
+        method: "DELETE",
+      });
+      setProduit((prevProduit) =>
+        prevProduit?.filter((produits) => produits.id !== productIdToDelete)
+      );
+      alert("Produit supprimé");
+    }
+    setShowConfirmation(false);
+  };
+
+  const cancelDelete = () => {
+    setProductIdToDelete(null);
+    setShowConfirmation(false);
+  };
+
+  const liste = produit?.map((produits: Tproduit) => (
+    <li className="list-groupe-item" key={produits.id}>
+      <strong>{produits.nom}:</strong>&nbsp;{produits.description}
+      <br /> <strong>ADRESSE DE L'IMAGE:</strong>&nbsp;{produits.urlImage}
+      &emsp; <strong>PRIX:</strong>&nbsp;
+      {produits.prix}€
+      <div>
+        <>
+          <UpProd produits={produits} updateProduit={updateProduit} />
+          <button
+            type="button"
+            className="btn btn-danger m-1"
+            onClick={() => handleDelete(produits.id)}
+          >
+            Supprimer
+          </button>
+        </>
+      </div>
+    </li>
   ));
 
   return (
     <div className="mt-2">
       <div className="card rounded-0">
         <div className="card-header">Prestations/Prix</div>
-        {liste}
+        <ul className="list-group list-group-flush">{liste}</ul>
       </div>
+      {showConfirmation && (
+        <div className="modal" id="suppModal">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Confirmation</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={cancelDelete}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <p>Êtes-vous sûr de vouloir supprimer ce produit ?</p>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={cancelDelete}
+                >
+                  Annuler
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={confirmDelete}
+                >
+                  Supprimer
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <CreerProduit produit={produit} setPage={props.setPage} />
     </div>
   );

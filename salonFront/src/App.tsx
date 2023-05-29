@@ -101,7 +101,7 @@ function App() {
                   onClick={() => setPage("homme")}
                   href="#"
                 >
-                  Coiffures Hommes & Barbe
+                  Coiffures Hommes, Barbe & enfants
                 </a>
                 <a
                   className="nav-link nav"

@@ -15,6 +15,8 @@ function Contact() {
 
   const [alerteEnvoyee, setAlerteEnvoyee] = useState(false);
   const form = useRef() as MutableRefObject<HTMLFormElement>;
+  const [afficherRdv, setAfficherRdv] = useState(false);
+
   const handleSubmit = (event: any) => {
     event.preventDefault();
     // Envoyer le formulaire et traiter la réponse ici
@@ -52,6 +54,14 @@ function Contact() {
         }
       );
     e.target.reset();
+  };
+  const valeurOption = (event: { target: { value: any } }) => {
+    const optionSelectionnee = event.target.value;
+    if (optionSelectionnee === "Prise de Rendez-vous") {
+      setAfficherRdv(true);
+    } else {
+      setAfficherRdv(false);
+    }
   };
 
   return (
@@ -176,6 +186,7 @@ function Contact() {
                 className="form-select border-dark rounded-0"
                 id="inputGroupSelect01"
                 name="objet"
+                onChange={valeurOption}
               >
                 <option className=" border-dark rounded-0" selected>
                   Choix...
@@ -195,7 +206,7 @@ function Contact() {
                 </option>
               </select>
             </div>
-            <Rdv />
+            {afficherRdv && <Rdv />}
             <div className="input-group mb-3">
               <span
                 className="input-group-text border-dark rounded-0"

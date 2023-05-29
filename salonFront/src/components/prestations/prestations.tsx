@@ -3,9 +3,17 @@ import { Tpresta } from "../../types/prestation.type";
 import "./prestations.css";
 import { UContext } from "../../context/userContext";
 import CreerPrestation from "./creerPrestation";
+import UpPresta from "./updatePresta";
 function TableauPresations(props: { setPage: any }) {
-  const { user, setUser } = useContext(UContext);
+  const { user } = useContext(UContext);
   const [presta, setPresta] = useState<Tpresta[]>([]);
+
+  const updatePrestation = () => {
+    fetch(baseUrl, options)
+      .then((response) => response.json())
+      .then((donnee) => setPresta(donnee))
+      .catch((erreur) => `${erreur}`);
+  };
 
   const baseUrl = "http://localhost:3000/prestations";
   const options = {
@@ -22,35 +30,37 @@ function TableauPresations(props: { setPage: any }) {
   console.log(presta);
 
   const handleDelete = (id: number) => {
-    setPresta((prevPresta) => prevPresta?.filter((data) => data.id !== id));
+    setPresta((prevPresta) =>
+      prevPresta?.filter((prestation) => prestation.id !== id)
+    );
   };
 
-  const liste = presta?.map((data: Tpresta) => (
+  const liste = presta?.map((prestation: Tpresta) => (
     <ul className="list-group list-group-flush">
       <li className="list-groupe-item" /* onClick={alert} */>
-        <strong>{data.nom}:</strong>&nbsp;{data.description}
-        <br /> <strong>DUREE:</strong>&nbsp;{data.temps}
+        <strong>{prestation.nom}:</strong>&nbsp;{prestation.description}
+        <br /> <strong>DUREE:</strong>&nbsp;{prestation.temps}
         &emsp; <strong>PRIX:</strong>&nbsp;
-        {data.prix}€
+        {prestation.prix}€
         <div>
           {user?.admin ? (
             <>
-              <button
-                type="button"
-                className="btn"
-                data-bs-toggle="modal"
-                data-bs-target="#modalEdit"
-              >
-                Modifier
-              </button>
+              <UpPresta
+                prestation={prestation}
+                presta={presta}
+                updatePresta={updatePrestation}
+              />
               <button
                 type="button"
                 className="btn btn-danger m-1"
                 onClick={async () => {
-                  await fetch(`http://localhost:3000/prestations/${data.id}`, {
-                    method: "DELETE",
-                  });
-                  handleDelete(data.id);
+                  await fetch(
+                    `http://localhost:3000/prestations/${prestation.id}`,
+                    {
+                      method: "DELETE",
+                    }
+                  );
+                  handleDelete(prestation.id);
                   alert("Prestation supprimée");
                 }}
               >
