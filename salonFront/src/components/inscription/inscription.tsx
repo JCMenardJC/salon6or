@@ -91,15 +91,7 @@ function Inscription(props: { setPage: any }) {
                 name="password"
                 required
               />
-              <div className="input-group-append">
-                <span
-                  className="input-group-text" /* 
-                  onClick={password_show_hide()} */
-                >
-                  <i className="bi bi-eye" id="show_eye"></i>
-                  <i className="bi bi-eye-slash" id="hide_eye"></i>
-                </span>
-              </div>
+              <div className="input-group-append"></div>
             </div>
             <div className="input-group mb-3">
               <span

@@ -3,9 +3,9 @@ import "./successRegister.css";
 
 function SuccessRegister() {
   return (
-    <div className="container">
-      <div className="rows justify-content-end">
-        <div className="card col-4 ">
+    <>
+      <div className="item-align-center">
+        <div className="card col-7">
           <img src="img/success.jpg" className="card-img-top" alt="success" />
           <div className="card-body">
             <h5 className="card-title">Félicitation!</h5>
@@ -17,7 +17,7 @@ function SuccessRegister() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 export default SuccessRegister;
