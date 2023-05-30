@@ -37,7 +37,7 @@ function AdminUsers() {
 
   const confirmDelete = async () => {
     if (userIdToDelete) {
-      await fetch(`http://localhost:3000/produits/${userIdToDelete}`, {
+      await fetch(`http://localhost:3000/users/${userIdToDelete}`, {
         method: "DELETE",
       });
       setUsers((prevUser) =>

@@ -2,3 +2,7 @@
     color: #08321e !important;
         font-family: 'Playfair Display SC', serif ;
     }
+.centered-card {
+    display: flex;
+    justify-content: center;
+}

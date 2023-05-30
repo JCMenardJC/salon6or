@@ -4,7 +4,7 @@ import "./successRegister.css";
 function SuccessRegister() {
   return (
     <>
-      <div className="item-align-center">
+      <div className="container centered-card">
         <div className="card col-7">
           <img src="img/success.jpg" className="card-img-top" alt="success" />
           <div className="card-body">
