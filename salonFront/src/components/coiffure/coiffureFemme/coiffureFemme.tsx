@@ -77,13 +77,12 @@ function CoiffureFemme() {
               <div className="poster"></div>
               <div className="info">
                 <header></header>
-                <h3 className="border">Le Cataplasme couleur végétale</h3>
+                <h3 className="border">Le Cataplasme</h3>
                 <p>
-                  Un cataplasme couleur végétale en coiffure est une méthode de
-                  coloration des cheveux utilisant des produits à base de
-                  plantes pour obtenir des teintes naturelles et douces, sans
-                  produits chimiques agressifs.~ A partir de 70€ sur cheveux
-                  courts et dure environ 3 heures. ~
+                  Un cataplasme couleur végétale est une méthode de coloration
+                  des cheveux utilisant des produits à base de plantes pour des
+                  teintes naturelles, sans produits chimiques.~ A partir de 70€
+                  sur cheveux courts et dure environ 3 heures. ~
                 </p>
               </div>
             </div>
