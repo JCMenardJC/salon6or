@@ -21,3 +21,7 @@
 #coiffure3:nth-child(3) .info header {
     background-image: url(./img/h3b.jpg);
 }
+.centered-list {
+    display: flex;
+    justify-content: center;
+}

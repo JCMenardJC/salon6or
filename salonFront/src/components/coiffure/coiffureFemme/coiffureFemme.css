@@ -44,3 +44,7 @@
 h5{
     font-family: 'Playfair Display SC', serif;
 }
+.centered-list {
+    display: flex;
+    justify-content: center;
+}

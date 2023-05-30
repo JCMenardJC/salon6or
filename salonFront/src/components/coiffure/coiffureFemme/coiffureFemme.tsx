@@ -8,8 +8,7 @@ function CoiffureFemme() {
         *Passez votre souris sur les images ou cliquez dessus pour plus
         d'informations
       </h5>
-      <div className="d-flex justify-content-center">
-        <div className="col-2"></div>
+      <div className="container centered-list">
         <ul className="stage">
           <li className="scene" id="coupef">
             <div className="movie">
