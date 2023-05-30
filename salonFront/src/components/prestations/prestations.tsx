@@ -4,9 +4,13 @@ import "./prestations.css";
 import { UContext } from "../../context/userContext";
 import CreerPrestation from "./creerPrestation";
 import UpPresta from "./updatePresta";
+import { Modal, Button } from "react-bootstrap";
+
 function TableauPresations(props: { setPage: any }) {
   const { user } = useContext(UContext);
   const [presta, setPresta] = useState<Tpresta[]>([]);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [prestaIdToDelete, setPrestaIdToDelete] = useState<number | null>(null);
 
   const updatePrestation = () => {
     fetch(baseUrl, options)
@@ -30,11 +34,27 @@ function TableauPresations(props: { setPage: any }) {
   console.log(presta);
 
   const handleDelete = (id: number) => {
-    setPresta((prevPresta) =>
-      prevPresta?.filter((prestation) => prestation.id !== id)
-    );
+    setPrestaIdToDelete(id);
+    setShowConfirmation(true);
   };
 
+  const confirmDelete = async () => {
+    if (prestaIdToDelete) {
+      await fetch(`http://localhost:3000/prestations/${prestaIdToDelete}`, {
+        method: "DELETE",
+      });
+      setPresta((prevPresta) =>
+        prevPresta?.filter((presta) => presta.id !== prestaIdToDelete)
+      );
+      alert("Prestation supprimée");
+    }
+    setShowConfirmation(false);
+  };
+
+  const cancelDelete = () => {
+    setPrestaIdToDelete(null);
+    setShowConfirmation(false);
+  };
   const liste = presta?.map((prestation: Tpresta) => (
     <ul className="list-group list-group-flush">
       <li className="list-groupe-item" /* onClick={alert} */>
@@ -53,16 +73,7 @@ function TableauPresations(props: { setPage: any }) {
               <button
                 type="button"
                 className="btn btn-danger m-1"
-                onClick={async () => {
-                  await fetch(
-                    `http://localhost:3000/prestations/${prestation.id}`,
-                    {
-                      method: "DELETE",
-                    }
-                  );
-                  handleDelete(prestation.id);
-                  alert("Prestation supprimée");
-                }}
+                onClick={() => handleDelete(prestation.id)}
               >
                 Supprimer
               </button>
@@ -83,6 +94,23 @@ function TableauPresations(props: { setPage: any }) {
       {user?.admin ? (
         <CreerPrestation presta={presta} setPage={props.setPage} />
       ) : null}
+
+      <Modal show={showConfirmation} onHide={cancelDelete}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Êtes-vous sûr de vouloir supprimer cette prestation ?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={cancelDelete}>
+            Annuler
+          </Button>
+          <Button variant="danger" onClick={confirmDelete}>
+            Supprimer
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

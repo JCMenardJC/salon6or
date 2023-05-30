@@ -24,7 +24,7 @@ button{
 }
 h3{color: #08321e;}
 .enVente{
-    color: #BDBDBD !important;;
+    color: #BDBDBD !important;
 }
 .modal-dialog {
     max-width: 90%;
@@ -57,4 +57,11 @@ h3{color: #08321e;}
 .card-content {
     height: 500px;
     /* Set a fixed height */
+}
+
+.modal .modal-body{
+        font-family: 'Playfair Display SC', serif !important;
+        color: #fdddb5 !important;
+
+
 }

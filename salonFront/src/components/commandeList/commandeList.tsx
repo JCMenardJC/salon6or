@@ -3,11 +3,15 @@ import { UContext } from "../../context/userContext";
 import { TCommande } from "../../types/commande.type";
 import { Tproduit } from "../../types/produit.type";
 import "./commandeList.css";
+import { Modal, Button } from "react-bootstrap";
 
 function CommandeListe(props: { windowWidth: any }) {
   const { user, setUser } = useContext(UContext);
   const [commandes, setCommandes] = useState<TCommande[]>([]);
-
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [commandeIdToDelete, setCommandeIdToDelete] = useState<number | null>(
+    null
+  );
   const baseUrl = "http://localhost:3000/commandes";
   const options = {
     method: "GET",
@@ -39,8 +43,8 @@ function CommandeListe(props: { windowWidth: any }) {
   };
 
   const handleDeleteCommande = (id: number) => {
-    const updatedCommandes = commandes.filter((c) => c.id !== id);
-    setCommandes(updatedCommandes);
+    setCommandeIdToDelete(id);
+    setShowConfirmation(true);
   };
 
   const commandesClient = commandes?.map(
@@ -95,13 +99,7 @@ function CommandeListe(props: { windowWidth: any }) {
       <td>
         <button
           className="btn btn-danger"
-          onClick={async () => {
-            await fetch(`http://localhost:3000/commandes/${commande.id}`, {
-              method: "DELETE",
-            });
-            handleDeleteCommande(commande.id);
-            alert("Commande Supprimée!");
-          }}
+          onClick={async () => handleDeleteCommande(commande.id)}
         >
           {props.windowWidth > 690 ? (
             "Supprimer"
@@ -150,6 +148,23 @@ function CommandeListe(props: { windowWidth: any }) {
     </tr>
   ));
 
+  const confirmDelete = async () => {
+    if (commandeIdToDelete) {
+      await fetch(`http://localhost:3000/produits/${commandeIdToDelete}`, {
+        method: "DELETE",
+      });
+      setCommandes((prevCommande) =>
+        prevCommande?.filter((commande) => commande.id !== commandeIdToDelete)
+      );
+      alert("Produit supprimé");
+    }
+    setShowConfirmation(false);
+  };
+
+  const cancelDelete = () => {
+    setCommandeIdToDelete(null);
+    setShowConfirmation(false);
+  };
   return (
     <div>
       {/*       <div className="row">
@@ -179,6 +194,23 @@ function CommandeListe(props: { windowWidth: any }) {
           </tbody>
         </table>
       </div>
+
+      <Modal show={showConfirmation} onHide={cancelDelete}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Êtes-vous sûr de vouloir supprimer cette commande ?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={cancelDelete}>
+            Annuler
+          </Button>
+          <Button variant="danger" onClick={confirmDelete}>
+            Supprimer
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
     /*       </div>
     </div> */

@@ -4,6 +4,7 @@ import { Tproduit } from "../../types/produit.type";
 import CreerProduit from "./creerProduit";
 import "./produits.css";
 import UpProd from "./updateProduit";
+import { Modal, Button } from "react-bootstrap";
 
 export default function ListingProduits(props: { setPage: any }) {
   const { user, setUser } = useContext(UContext);
@@ -83,42 +84,24 @@ export default function ListingProduits(props: { setPage: any }) {
         <div className="card-header">Prestations/Prix</div>
         <ul className="list-group list-group-flush">{liste}</ul>
       </div>
-      {showConfirmation && (
-        <div className="modal" id="suppModal">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Confirmation</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={cancelDelete}
-                ></button>
-              </div>
-              <div className="modal-body">
-                <p>Êtes-vous sûr de vouloir supprimer ce produit ?</p>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={cancelDelete}
-                >
-                  Annuler
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={confirmDelete}
-                >
-                  Supprimer
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
       <CreerProduit produit={produit} setPage={props.setPage} />
+
+      <Modal show={showConfirmation} onHide={cancelDelete}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Êtes-vous sûr de vouloir supprimer ce produit ?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={cancelDelete}>
+            Annuler
+          </Button>
+          <Button variant="danger" onClick={confirmDelete}>
+            Supprimer
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
