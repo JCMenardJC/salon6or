@@ -33,11 +33,10 @@ function CoiffureFemme() {
                 <header></header>
                 <h3 className="border">Le Balayage</h3>
                 <p>
-                  Le balayage est une coloration partielle consistant à teindre
-                  certaines parties de la chevelure, en parsemant les cheveux de
-                  très fines mèches un ou deux tons plus clairs que la couleur
-                  de base. ~ A partir de 65€ sur cheveux courts et dure environ
-                  60 minutes. ~
+                  Coloration partielle consistant à teindre certaines parties de
+                  la chevelure, en parsemant les cheveux de très fines mèches un
+                  ou deux tons plus clairs que la base. ~ A partir de 65€ sur
+                  cheveux courts et dure environ 60 minutes. ~
                 </p>
               </div>
             </div>
