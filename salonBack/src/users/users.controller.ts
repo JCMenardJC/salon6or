@@ -84,14 +84,13 @@ export class UsersController {
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Patch()
-  async update(@Body() updateUserDto: UpdateUserDto, @Request() req) {
-    const userLogged = req.user.userId;
-
-    const userUpdate = await this.usersService.update(
-      userLogged,
-      updateUserDto,
-    );
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+    @Request() req,
+  ) {
+    const userUpdate = await this.usersService.update(+id, updateUserDto);
     //console.log('apres update', userUpdate);
 
     return {
