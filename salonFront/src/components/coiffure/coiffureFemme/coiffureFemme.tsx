@@ -17,11 +17,10 @@ function CoiffureFemme() {
                 <header></header>
                 <h3 className="border">La couleur</h3>
                 <p className="description">
-                  Une couleur en coiffure fait référence à la teinte appliquée
-                  sur les cheveux pour changer leur apparence, qu'il s'agisse
-                  d'une couleur naturelle, d'une coloration fantaisiste ou d'une
-                  modification de la couleur existante. ~ A partir de 45€ sur
-                  cheveux courts et dure environ 45 minutes. ~
+                  Une couleur est une teinte appliquée sur les cheveux pour
+                  changer leur apparence, soit pour une couleur naturelle,
+                  fantaisiste ou une modification de la couleur existante. ~ A
+                  partir de 45€ sur cheveux courts et dure environ 45 minutes. ~
                 </p>
               </div>
             </div>
